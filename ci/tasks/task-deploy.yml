@@ -1,0 +1,15 @@
+# hello-go-deploy-gce task-deploy.yml
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: golang
+    tag: 1.7.1
+
+inputs:
+- name: hello-go-deploy-gce
+
+run:
+  path: ./hello-go-deploy-gce/ci/scripts/deploy.sh

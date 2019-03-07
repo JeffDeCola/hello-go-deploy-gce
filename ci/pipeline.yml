@@ -1,0 +1,185 @@
+# hello-go-deploy-gce pipeline.yml
+
+jobs:
+
+- name: job-readme-github-pages
+  plan:
+  - get: hello-go-deploy-gce
+    trigger: true
+  - put: resource-slack-alert
+    params:
+      channel: '#jeff-builds'
+      text: "From hello-go-deploy-gce: STARTED job-readme-github-pages in concourse ci."
+  - put: resource-repo-status
+    params: { state: "pending", description: "STARTED job-readme-github-pages in concourse ci.", commit: "hello-go-deploy-gce" }
+  - task: task-readme-github-pages
+    file: hello-go-deploy-gce/ci/tasks/task-readme-github-pages.yml
+    on_success:
+      do:
+      - put: hello-go-deploy-gce
+        params:
+          repository: hello-go-deploy-gce-updated  
+      - put: resource-slack-alert
+        params:
+          channel: '#jeff-builds'
+          text: "From hello-go-deploy-gce: PASSED job-readme-github-pages in concourse ci."
+      - put: resource-repo-status
+        params: { state: "success", description: "PASSED job-readme-github-pages in concourse ci", commit: "hello-go-deploy-gce" }
+    on_failure:
+      do:
+      - put: resource-slack-alert
+        params:
+          channel: '#jeff-builds'
+          text: "From hello-go-deploy-gce: FAILED job-readme-github-pages in concourse ci."
+      - put: resource-repo-status
+        params: { state: "failure", description: "FAILED job-readme-github-pages in concourse ci", commit: "hello-go-deploy-gce" }
+
+- name: job-unit-tests
+  plan:
+  - get: hello-go-deploy-gce
+    trigger: true
+    passed: [job-readme-github-pages]
+  - put: resource-slack-alert
+    params:
+      channel: '#jeff-builds'
+      text: "From hello-go-deploy-gce: STARTED job-unit-tests in concourse ci."
+  - put: resource-repo-status
+    params: { state: "pending", description: "STARTED job-unit-tests in concourse ci.", commit: "hello-go-deploy-gce" }
+  - task: task-unit-tests
+    file: hello-go-deploy-gce/ci/tasks/task-unit-tests.yml
+    on_success:
+      do:
+      - put: hello-go-deploy-gce
+        params:
+          repository: hello-go-deploy-gce  
+      - put: resource-slack-alert
+        params:
+          channel: '#jeff-builds'
+          text_file: coverage-results/test_coverage.txt
+          text: |
+            From hello-go-deploy-gce: PASSED job-unit-tests in concourse ci. 
+            $TEXT_FILE_CONTENT
+      - put: resource-repo-status
+        params: { state: "success", description: "PASSED job-unit-tests in concourse ci", commit: "hello-go-deploy-gce" }
+    on_failure:
+      do:
+      - put: resource-slack-alert
+        params:
+          channel: '#jeff-builds'
+          text: "From hello-go-deploy-gce: FAILED job-unit-tests in concourse ci."
+      - put: resource-repo-status
+        params: { state: "failure", description: "FAILED job-unit-tests in concourse ci.", commit: "hello-go-deploy-gce" }
+
+- name: job-build
+  plan:
+    - get: hello-go-deploy-gce
+      trigger: true
+      passed: [job-unit-tests]
+    - put: resource-slack-alert
+      params:
+        channel: '#jeff-builds'
+        text: "From hello-go-deploy-gce: STARTED job-build in concourse ci."
+    - put: resource-repo-status
+      params: { state: "pending", description: "STARTED job-build in concourse ci.", commit: "hello-go-deploy-gce" }
+    - task: task-build
+      file: hello-go-deploy-gce/ci/tasks/task-build.yml
+    - put: resource-dump-to-dockerhub
+      params: { build: "dist"}
+      on_success:
+        do:
+        - put: resource-slack-alert
+          params:
+            channel: '#jeff-builds'
+            text: "From hello-go-deploy-gce: PASSED job-build in concourse ci."
+        - put: resource-repo-status
+          params: { state: "pending", description: "PASSED job-build in concourse ci.", commit: "hello-go-deploy-gce" }
+      on_failure:
+        do:
+        - put: resource-slack-alert
+          params:
+            channel: '#jeff-builds'
+            text: "From hello-go-deploy-gce: FAILED job-build in concourse ci."
+        - put: resource-repo-status
+          params: { state: "failure", description: "FAILED job-build in concourse ci.", commit: "hello-go-deploy-gce" }
+
+- name: job-deploy
+  plan:
+    - get: hello-go-deploy-gce
+      trigger: true
+      passed: [job-build]
+    - put: resource-slack-alert
+      params:
+        channel: '#jeff-builds'
+        text: "From hello-go-deploy-gce: STARTED job-deploy in concourse ci."
+    - put: resource-repo-status
+      params: { state: "pending", description: "STARTED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
+    - task: task-deploy
+      file: hello-go-deploy-gce/ci/tasks/task-deploy.yml   
+    - put: resource-marathon
+      params: {app_json: "hello-go-deploy-gce/app.json", time_out: 10}      
+      on_success:
+        do:
+        - put: resource-slack-alert
+          params:
+            channel: '#jeff-builds'
+            text: "From hello-go-deploy-gce: PASSED job-deploy in concourse ci."
+        - put: resource-repo-status
+          params: { state: "success", description: "PASSED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
+      on_failure:
+        do:
+        - put: resource-slack-alert
+          params:
+            channel: '#jeff-builds'
+            text: "From hello-go-deploy-gce: FAILED job-deploy in concourse ci."
+        - put: resource-repo-status
+          params: { state: "failure", description: "FAILED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
+
+resource_types:
+
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+- name: github-status
+  type: docker-image
+  source:
+    repository: dpb587/github-status-resource
+    tag: master
+- name: marathon-deploy
+  type: docker-image
+  source:
+   repository: ckaznocha/marathon-resource
+   tag: latest
+
+resources:
+
+- name: hello-go-deploy-gce
+  type: git
+  source:
+    #uri: https://github.com/jeffdecola/hello-go-deploy-gce
+    uri: git@github.com:jeffdecola/hello-go-deploy-gce.git
+    branch: master
+    private_key: {{git_private_key}}
+- name: resource-dump-to-dockerhub
+  type: docker-image
+  source:
+    repository: jeffdecola/hello-go-deploy-gce
+    tag: latest
+    username: jeffdecola
+    password: {{dockerhub_password}}
+- name: resource-slack-alert
+  type: slack-notification
+  source:
+    url: {{slack_url}} 
+- name: resource-repo-status 
+  type: github-status
+  source:
+    repository: jeffdecola/hello-go-deploy-gce 
+    access_token: {{repo_github_token}}
+- name: resource-marathon
+  type: marathon-deploy
+  source:
+    app_id: hello-go-deploy-gce-long-run
+    uri: http://10.141.141.10:8080
+    

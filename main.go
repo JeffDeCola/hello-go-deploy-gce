@@ -20,6 +20,6 @@ func main() {
 	for {
 		a = addThis(a, b)
 		fmt.Println("Hello everyone, the count is:", a)
-		time.Sleep(1000 * time.Millisecond)
+		time.Sleep(2000 * time.Millisecond)
 	}
 }

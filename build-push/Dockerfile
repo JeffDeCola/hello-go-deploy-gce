@@ -2,7 +2,7 @@
 
 FROM alpine
 
-MAINTAINER Jeff DeCola (https://github.com/JeffDeCola/hello-go-deploy-marathon)
+LABEL Jeff DeCola (https://github.com/JeffDeCola/hello-go-deploy-marathon)
 
 # Put the binary into the container
 COPY ../bin/hello-go /

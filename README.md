@@ -157,6 +157,11 @@ This script runs the above commands in concourse
 
 ## STEP 4 - DEPLOY (TO MARATHON)
 
+```text
+*** THE DEPLOY IS UNDER CONSTRUCTION - CHECK BACK SOON ***
+For testing this Repo, I'm temporarily using using mesos/marathon.
+```
+
 Lets pull the `hello-go-deploy-gce` docker image
 from DockerHub and deploy to mesos/marathon.
 

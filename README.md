@@ -2,7 +2,7 @@
 
 ```text
 *** THE DEPLOY IS UNDER CONSTRUCTION - CHECK BACK SOON ***
-For testing this repo, I'm temporarily using using mesos/marathon.
+For testing this Repo, I'm temporarily using using mesos/marathon.
 ```
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/JeffDeCola/hello-go-deploy-gce)](https://goreportcard.com/report/github.com/JeffDeCola/hello-go-deploy-gce)

@@ -1,4 +1,4 @@
-# hello-go-deploy-gce task-build.yml
+# hello-go-deploy-gce task-build-push.yml
 
 platform: linux
 
@@ -15,4 +15,6 @@ outputs:
 - name: dist
 
 run:
-  path: ./hello-go-deploy-gce/ci/scripts/build.sh
+  path: ./hello-go-deploy-gce/ci/scripts/build-push.sh
+  # args: [-debug]
+

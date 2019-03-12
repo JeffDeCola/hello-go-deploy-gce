@@ -16,3 +16,5 @@ outputs:
 
 run:
   path: ./hello-go-deploy-gce/ci/scripts/unit-tests.sh
+  # args: [-debug]
+  

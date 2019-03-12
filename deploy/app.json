@@ -1,0 +1,17 @@
+{
+    "id": "hello-go-deploy-gce-long-run",
+    "cpus": 0.1,
+    "mem": 4.0,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "forcePullImage": true,
+            "image": "jeffdecola/hello-go-deploy-gce:latest",
+            "network": "BRIDGE",
+            "portMappings": [{
+                "containerPort": 8080,
+                "hostPort": 0
+            }]
+        }
+    }
+}

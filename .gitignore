@@ -1,11 +1,11 @@
 // CONCOURSE
 .credentials.yml
 
-// Ignore test coverage
-test/*
-
-// Ignore binaries
+// Ignore all binaries
 bin/*
 
-// Ignore binaries
+// Ignore test coverage
+test/test_converage.txt
+
+// Ignore binary used for build
 build-push/hello-go

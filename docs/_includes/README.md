@@ -126,7 +126,7 @@ This script runs the above commands
 This script runs the above commands in concourse
 [/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/build-push.sh).
 
-## STEP 4 - DEPLOY (TO MARATHON)
+## STEP 4 - DEPLOY (TO GCE)
 
 ```text
 *** THE DEPLOY IS UNDER CONSTRUCTION - CHECK BACK SOON ***
@@ -134,17 +134,9 @@ For testing this Repo, I'm temporarily using using mesos/marathon.
 ```
 
 Lets pull the `hello-go-deploy-gce` docker image
-from DockerHub and deploy to mesos/marathon.
+from DockerHub and deploy to gce.
 
-This is actually very simple, you just PUT the
-[/deploy/app.json](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy/app.json)
-file to mesos/marathon. This json file tells marathon what to do.
-
-```bash
-curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
--d @app.json \
--H "Content-type: application/json"
-```
+tbd
 
 This script runs the above commands
 [/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy/deploy.sh).
@@ -172,7 +164,7 @@ The `jobs` and `tasks` are,
 * `job-deploy` runs task
   [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
 
-The concourse `resources type` are,
+The concourse `resources types` are,
 
 * `hello-go-deploy-gce` uses a resource type
   [docker-image](https://hub.docker.com/r/concourse/git-resource/)

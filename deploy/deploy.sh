@@ -16,9 +16,13 @@ else
     echo " "
 fi
 
-echo "Send app.json file to marathon"
-curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running -d @app.json -H "Content-type: application/json"
+echo "The goal is to deploy to gce."
 echo " "
+
+
+
+
+
 
 echo "deploy.sh (END)"
 echo " "

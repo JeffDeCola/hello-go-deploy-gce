@@ -12,7 +12,7 @@ For testing this Repo, I'm temporarily using using mesos/marathon.
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
 `hello-go-deploy-gce` _uses Concourse CI to test, build, push (to DockerHub)
-and deploy a long running "hello-world" Docker Image to Google Compute Engine._
+and deploy a long running "hello-world" Docker Image to Google Compute Engine (gce)._
 
 I also have other repos showing different deployments,
 
@@ -44,7 +44,7 @@ To push a docker image you will need,
 
 To deploy to gce you will need,
 
-* [google compute engine (gce)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine.md),
+* [google compute engine (gce)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine.md)
 
 As a bonus, you can use Concourse CI to run the scripts,
 

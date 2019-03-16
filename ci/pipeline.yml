@@ -115,8 +115,6 @@ jobs:
       params: { state: "pending", description: "STARTED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
     - task: task-deploy
       file: hello-go-deploy-gce/ci/tasks/task-deploy.yml
-    - put: resource-marathon
-      params: {app_json: "hello-go-deploy-gce/deploy/app.json", time_out: 10}
       on_success:
         do:
         - put: resource-slack-alert
@@ -146,11 +144,6 @@ resource_types:
   source:
     repository: dpb587/github-status-resource
     tag: master
-- name: marathon-deploy
-  type: docker-image
-  source:
-   repository: ckaznocha/marathon-resource
-   tag: latest
 
 resources:
 
@@ -177,9 +170,4 @@ resources:
   source:
     repository: jeffdecola/hello-go-deploy-gce 
     access_token: {{repo_github_token}}
-- name: resource-marathon
-  type: marathon-deploy
-  source:
-    app_id: hello-go-deploy-gce-long-run
-    uri: http://10.141.141.10:8080
     

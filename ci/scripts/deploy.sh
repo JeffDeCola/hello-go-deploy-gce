@@ -18,6 +18,7 @@ else
 fi
 
 echo "The goal is to send the docker to gce"
+echo "   - crate image"
 echo " "
 
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"

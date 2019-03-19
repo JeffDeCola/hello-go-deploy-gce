@@ -157,20 +157,45 @@ This script runs the above commands in concourse
 
 ## STEP 4 - DEPLOY (TO GCE)
 
-```text
-*** THE DEPLOY IS UNDER CONSTRUCTION - CHECK BACK SOON ***
-For testing this Repo, I'm temporarily using using mesos/marathon.
-```
+Refer to my
+[gce cheat sheet](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine.md),
+for more detailed information and a nice illustration.
 
-Lets pull the `hello-go-deploy-gce` docker image
-from DockerHub and deploy to gce.
+The goal is to deploy a VM instance from a custom `image`.
 
-tbd
+There are three steps to deployment on gce,
 
-This script runs the above commands
-[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy/deploy.sh).
+* Create a custom `image` using `packer` -
+  Your boot disk that contains your stuff (docker container).
+* Create an `instance template` - What HW resources you want for your VM instance.
+* Create an `instance group` - Will deploy and scale you VM instance(s).
 
-This script runs the above commands in concourse
+### 4.1 CREATE A CUSTOM IMAGE (USING PACKER)
+
+Refer to my
+[create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine-create-image-packer.md)
+for more detailed information.
+
+tbd...
+
+This script runs the create a custom image (using packer) commands.
+[/gce-deploy/????.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/???.sh).
+
+### 4.2 CREATE AN INSTANCE TEMPLATE
+
+tbd...
+
+This script runs the create an instance template commands.
+[/gce-deploy/????.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/???.sh).
+
+### 4.2 CREATE AN INSTANCE GROUP
+
+tbd...
+
+This script runs the create an instance group commands.
+[/gce-deploy/????.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/???.sh).
+
+Lastly, this script runs all of the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
 
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)

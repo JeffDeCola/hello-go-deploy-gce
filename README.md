@@ -42,10 +42,10 @@ To push a docker image you will need,
 
 * [DockerHub account](https://hub.docker.com/)
 
-To deploy to gce you will need,
+To deploy to `gce` you will need,
 
 * [google compute engine (gce)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine.md)
-* [packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/packer-cheat-sheet).
+* [packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/packer-cheat-sheet)
 
 As a bonus, you can use Concourse CI to run the scripts,
 
@@ -162,16 +162,16 @@ Refer to my
 [gce cheat sheet](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine.md)
 for more detailed information and some nice illustrations.
 
-There are three steps to deployment on gce,
+There are three steps to deployment on `gce`,
 
 * Build a custom `image` using `packer` -
   Your boot disk that contains all your stuff (docker container).
 * Create an `instance template` - What HW resources you want for your VM instance.
 * Create an `instance group` - Will deploy and scale you VM instance(s).
 
-The end goal is to have your service (hello-go-deploy-gce) running on gce.
+The end goal is to have your service `hello-go-deploy-gce` running on `gce`.
 
-### 4.1 CREATE A CUSTOM IMAGE (USING PACKER)
+### 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
 Refer to my
 [create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine-create-image-packer.md)
@@ -180,7 +180,7 @@ for more detailed information.
 tbd...
 
 This script runs the create a custom `image` (using packer) commands.
-[/gce-deploy/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance/build-image.sh).
+[/gce-deploy/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/build-image/build-image.sh).
 
 ### 4.2 CREATE AN INSTANCE TEMPLATE
 

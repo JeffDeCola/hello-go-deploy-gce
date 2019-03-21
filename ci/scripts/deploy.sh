@@ -17,8 +17,10 @@ else
     echo " "
 fi
 
-echo "The goal is to send the docker to gce"
-echo "   - crate image"
+echo "The goal is to send the docker image to gce"
+echo ""
+echo ""
+echo ""
 echo " "
 
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
@@ -39,6 +41,8 @@ echo " "
 echo "List whats in the current directory"
 ls -la
 echo " "
+
+echo "STEP ONE Build the image"
 
 echo "deploy.sh (END)"
 echo " "

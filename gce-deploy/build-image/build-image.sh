@@ -19,13 +19,19 @@ fi
 echo "The goal is to create a custom image using packer on gce."
 echo " "
 
-packer build --force \
--var "account_file=/home/jeff/.gcloud/lofty-outcome-860.json" \
--var 'project_id=lofty-outcome-860' \
--var 'region=us-central1' \
--var 'zone=us-central1-b' \
--var 'environment=p' \
-gce.json
+echo "packer build command"
+
+if [ "$1" = "-v" ]
+then
+    command="validate"
+else
+    command="build --force"
+fi
+
+packer "$command" \
+    -var "account_file=$GOOGLE_APPLICATION_CREDENTIALS" \
+    -var "project_id=$GOOGLE_JEFFS_PROJECT_ID" \
+    gce-packer-template.json
 
 echo "build-image.sh (END)"
 echo " "

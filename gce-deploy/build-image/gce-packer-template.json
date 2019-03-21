@@ -1,61 +1,33 @@
 {
     "variables": {
-        "project_id": "",
-        "region": "",
-        "zone": "",
-        "environment": "",
-        "_comment1": "jeff-test-goodbye-provisioning-{{isotime \"20060102030405\"}}",
-        "instance_name": "jeff-test-goodbye-provisioning-{{isotime \"20060102\"}}",
-        "source_image": "ubuntu-1604-xenial-v20160907a",
-        "machine_type": "n1-standard-1",
         "account_file": "",
-        "_comment2": "jeff-test-goodbye-{{isotime \"20060102030405\"}}",
-        "image_name": "jeff-test-goodbye-{{isotime \"20060102\"}}"
+        "project_id": "",
+        "source_image": "ubuntu-1604-xenial-v20190306",
+        "ssh_username": "jeffssh",
+        "zone": "us-west1-a"
     },
-  
-    "builders": [{
-        "type": "googlecompute",
-        "communicator": "ssh",
-        "ssh_timeout": "10m",
-        "project_id": "{{user `project_id`}}",
-        "disk_type": "pd-standard",
-        "ssh_username": "ubuntu",
-        "machine_type":  "{{user `machine_type`}}",
-        "source_image": "{{user `source_image`}}",
-        "zone": "{{user `zone`}}",
-        "region": "{{user `region`}}",
-        "image_name": "{{user `environment`}}-{{user `image_name`}}",
-        "instance_name": "{{user `environment`}}-{{user `instance_name`}}",
-        "use_internal_ip": true,
-        "account_file": "{{user `account_file`}}",
-        "tags": ["private"]
-    }],
-  
+
+    "builders": [
+        {   
+            "type": "googlecompute",
+            "account_file":"{{user `account_file`}}",
+            "project_id": "{{user `project_id`}}",
+            "source_image": "{{user `source_image`}}",
+            "ssh_username": "{{user `ssh_username`}}",
+            "zone": "{{user `zone`}}"
+        }
+    ],
+
     "provisioners": [
         {
             "type": "file",
-            "source": "./welcome.txt",
-            "destination": "/home/ubuntu/"
+            "source": "./install_scripts/welcome.txt",
+            "destination": "/home/jeff/"
         },
         {
             "type": "shell",
-            "inline":[
-                "ls -al /home/ubuntu",
-                "cat /home/ubuntu/welcome.txt"
-            ]
-        },
-        {
-            "type": "shell",
-            "pause_before": "10s",
-            "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E {{ .Path }}",
             "scripts": [
-                "install-scripts/add-user.sh",
-                "install-scripts/upgrade-system.sh",
-                "install-scripts/install-packages.sh",
-                "install-scripts/install-go.sh",
-                "install-scripts/install-service.sh",
-                "install-scripts/install-consul-template.sh",
-                "install-scripts/enable-service.sh"
+                "install-scripts/add-user.sh"
             ]
         }
     ]

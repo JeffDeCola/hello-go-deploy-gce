@@ -1,9 +1,15 @@
-#!/bin/sh
+#!/bin/bash -e
 # hello-go-deploy-gce create-instance-template.sh
 
 echo " "
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <image> -debug"
+    echo "Use command: gcloud compute images list --no-standard-images"
+    echo " "
+    exit 1
+fi
 
-if [ "$1" = "-debug" ]
+if [ "$2" = "-debug" ]
 then
     echo "create-instance-template.sh -debug (START)"
     echo " "
@@ -16,13 +22,32 @@ else
     echo " "
 fi
 
-echo "The goal is to create a custom image using packer on gce."
+echo "The goal is to create an instance template on gce."
 echo " "
 
+IMAGENAME="$1"
+PREFIX="jeff"
+SERVICE="hello-go"
+#POSTFIX=$(date -u +%Y%m%d-%H%M)
+POSTFIX=$(date -u +%Y%m%d)
 
-
-
-
+echo "gcloud compute command"
+gcloud compute \
+    --project "$GOOGLE_JEFFS_PROJECT_ID" \
+     instance-templates create "$PREFIX-$SERVICE-instance-template-$POSTFIX" \
+    --machine-type "f1-micro" \
+    --network "default" \
+    --maintenance-policy "TERMINATE" \
+    --tags "jeff-test" \
+    --image "$IMAGENAME" \
+    --boot-disk-size "10" \
+    --boot-disk-type "pd-standard" \
+    --boot-disk-device-name "$PREFIX-$SERVICE-disk-$POSTFIX" \
+    --description "hello-go from Jeffs Repo hello-go-deploy-gce" \
+    --region "us-west1"
+    # --service-account=SERVICE_ACCOUNT
+    # --preemptible \
+echo " "
 
 echo "create-instance-template.sh (END)"
 echo " "

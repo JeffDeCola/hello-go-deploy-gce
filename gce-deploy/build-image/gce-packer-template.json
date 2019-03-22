@@ -19,8 +19,8 @@
             "type": "googlecompute",
             "communicator": "ssh",
             "ssh_username": "{{user `ssh_username`}}",
-            "ssh_timeout": "10m",
-            "use_internal_ip": true,
+            "ssh_timeout": "5m",
+            "use_internal_ip": false,
             "account_file":"{{user `account_file`}}",
             "project_id": "{{user `project_id`}}",
             "zone": "{{user `zone`}}",
@@ -28,7 +28,6 @@
             "image_name": "{{user `prefix`}}-{{user `image_name`}}-{{user `postfix`}}",
             "image_description": "{{user `image_description`}}",
             "instance_name": "packer-{{user `image_name`}}-instance-{{user `postfix`}}",
-            "disk_name": "packer-{{user `image_name`}}-disk-{{user `postfix`}}",
             "disk_size": "{{user `disk_size`}}",
             "disk_type": "{{user `disk_type`}}",
             "machine_type": "{{user `machine_type`}}"

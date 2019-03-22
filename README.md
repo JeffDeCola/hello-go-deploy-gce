@@ -173,11 +173,18 @@ The end goal is to have your service `hello-go-deploy-gce` running on `gce`.
 
 ### 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
+```bash
+packer $command \
+    -var "account_file=$GOOGLE_APPLICATION_CREDENTIALS" \
+    -var "project_id=$GOOGLE_JEFFS_PROJECT_ID" \
+    gce-packer-template.json
+```
+
+The two env variables were already set up.
+
 Refer to my
 [create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine-create-image-packer.md)
-for more detailed information.
-
-tbd...
+for more detailed information on how to do this.
 
 This script runs the create a custom `image` (using packer) commands.
 [/gce-deploy/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/build-image/build-image.sh).

@@ -19,19 +19,23 @@ fi
 echo "The goal is to create a custom image using packer on gce."
 echo " "
 
-echo "packer build command"
-
+echo "Check for -v switch"
 if [ "$1" = "-v" ]
 then
+    echo "Validate this file"
     command="validate"
 else
-    command="build --force"
+    echo "Lets build the image"
+    command="build -force"
 fi
+echo " "
 
-packer "$command" \
+echo "packer build command"
+packer $command \
     -var "account_file=$GOOGLE_APPLICATION_CREDENTIALS" \
     -var "project_id=$GOOGLE_JEFFS_PROJECT_ID" \
     gce-packer-template.json
+echo " "
 
 echo "build-image.sh (END)"
 echo " "

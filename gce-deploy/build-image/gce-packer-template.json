@@ -1,33 +1,53 @@
 {
     "variables": {
+        "prefix": "jeff",
+        "postfix": "{{isotime \"20060102\"}}",
+        "ssh_username": "packer",
         "account_file": "",
         "project_id": "",
+        "zone": "us-west1-a",
         "source_image": "ubuntu-1604-xenial-v20190306",
-        "ssh_username": "jeffssh",
-        "zone": "us-west1-a"
+        "image_name": "hello-go",
+        "image_description": "hello-go from Jeffs Repo hello-go-deploy-gce",
+        "disk_size": "10",
+        "disk_type": "pd-standard",
+        "machine_type": "n1-standard-1"
     },
 
     "builders": [
         {   
             "type": "googlecompute",
+            "communicator": "ssh",
+            "ssh_username": "{{user `ssh_username`}}",
+            "ssh_timeout": "10m",
+            "use_internal_ip": true,
             "account_file":"{{user `account_file`}}",
             "project_id": "{{user `project_id`}}",
+            "zone": "{{user `zone`}}",
             "source_image": "{{user `source_image`}}",
-            "ssh_username": "{{user `ssh_username`}}",
-            "zone": "{{user `zone`}}"
+            "image_name": "{{user `prefix`}}-{{user `image_name`}}-{{user `postfix`}}",
+            "image_description": "{{user `image_description`}}",
+            "instance_name": "packer-{{user `image_name`}}-instance-{{user `postfix`}}",
+            "disk_name": "packer-{{user `image_name`}}-disk-{{user `postfix`}}",
+            "disk_size": "{{user `disk_size`}}",
+            "disk_type": "{{user `disk_type`}}",
+            "machine_type": "{{user `machine_type`}}"
         }
     ],
 
     "provisioners": [
         {
             "type": "file",
-            "source": "./install_scripts/welcome.txt",
-            "destination": "/home/jeff/"
+            "source": "./install-scripts/welcome.txt",
+            "destination": "/tmp/welcome.txt"
         },
         {
             "type": "shell",
+            "pause_before": "10s",
+            "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E {{ .Path }}",
             "scripts": [
-                "install-scripts/add-user.sh"
+                "./install-scripts/add-user-jeff.sh",
+                "./install-scripts/move-welcome-file.sh"
             ]
         }
     ]

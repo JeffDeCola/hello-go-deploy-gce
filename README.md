@@ -173,6 +173,8 @@ The end goal is to have your service `hello-go-deploy-gce` running on `gce`.
 
 ### 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
+Packer will be used to create the gce custom machine `image`.
+
 ```bash
 packer $command \
     -var "account_file=$GOOGLE_APPLICATION_CREDENTIALS" \
@@ -180,7 +182,11 @@ packer $command \
     gce-packer-template.json
 ```
 
-The two env variables were already set up.
+Check on `gce` that the image was created,
+
+```bash
+gcloud compute images list --no-standard-images
+```
 
 Refer to my
 [create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine-create-image-packer.md)
@@ -191,14 +197,60 @@ This script runs the create a custom `image` (using packer) commands.
 
 ### 4.2 CREATE AN INSTANCE TEMPLATE
 
-tbd...
+Run the following to create the instance template,
+
+```bash
+IMAGENAME="$1"
+PREFIX="jeff"
+SERVICE="hello-go"
+POSTFIX="date -u +%Y%m%d"
+
+gcloud compute \
+    --project "$GOOGLE_JEFFS_PROJECT_ID" instance-templates create "$PREFIX-$SERVICE-instance-template-$POSTFIX" \
+    --machine-type "f1-micro" \
+    --network "default" \
+    --maintenance-policy "TERMINATE" \
+    --tags "jeff-test" \
+    --image "$IMAGENAME" \
+    --boot-disk-size "10" \
+    --boot-disk-type "pd-standard" \
+    --boot-disk-device-name "$PREFIX-$SERVICE-disk-$POSTFIX" \
+    --description "hello-go from Jeffs Repo hello-go-deploy-gce" \
+    --region "us-west1"
+```
+
+Check on `gce` that the instance template was created,
+
+```bash
+gcloud compute instance-templates list
+```
 
 This script runs the create an `instance template` commands.
 [/gce-deploy/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance-template/create-instance-template.sh).
 
 ### 4.3 CREATE AN INSTANCE GROUP
 
-tbd...
+```bash
+TEMPLATENAME="$1"
+PREFIX="jeff"
+SERVICE="hello-go"
+#POSTFIX="date -u +%Y%m%d-%H%M"
+POSTFIX="date -u +%Y%m%d"
+
+gcloud compute --project "$GOOGLE_JEFFS_PROJECT_ID" instance-groups managed create
+    "$PREFIX-$SERVICE-instance-group-$POSTFIX" \
+    --size "1" \
+    --template "$TEMPLATENAME" \
+    --zone "us-west1-a" \
+    --description= "hello-go from Jeffs Repo hello-go-deploy-gce"
+```
+
+Check on `gce` that the instance group and VM instance was created,
+
+```bash
+gcloud compute instance-groups list
+gcloud compute instances list
+```
 
 This script runs the create an `instance group` commands.
 [/gce-deploy/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance-group/create-instance-group.sh).

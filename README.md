@@ -206,7 +206,8 @@ SERVICE="hello-go"
 POSTFIX="date -u +%Y%m%d"
 
 gcloud compute \
-    --project "$GOOGLE_JEFFS_PROJECT_ID" instance-templates create "$PREFIX-$SERVICE-instance-template-$POSTFIX" \
+    --project "$GOOGLE_JEFFS_PROJECT_ID" \
+     instance-templates create "$PREFIX-$SERVICE-instance-template-$POSTFIX" \
     --machine-type "f1-micro" \
     --network "default" \
     --maintenance-policy "TERMINATE" \
@@ -217,6 +218,8 @@ gcloud compute \
     --boot-disk-device-name "$PREFIX-$SERVICE-disk-$POSTFIX" \
     --description "hello-go from Jeffs Repo hello-go-deploy-gce" \
     --region "us-west1"
+    # --service-account=SERVICE_ACCOUNT
+    # --preemptible \
 ```
 
 Check on `gce` that the instance template was created,
@@ -234,15 +237,16 @@ This script runs the create an `instance template` commands.
 TEMPLATENAME="$1"
 PREFIX="jeff"
 SERVICE="hello-go"
-#POSTFIX="date -u +%Y%m%d-%H%M"
 POSTFIX="date -u +%Y%m%d"
 
-gcloud compute --project "$GOOGLE_JEFFS_PROJECT_ID" instance-groups managed create
-    "$PREFIX-$SERVICE-instance-group-$POSTFIX" \
+gcloud compute \
+    --project "$GOOGLE_JEFFS_PROJECT_ID" \
+    instance-groups managed create "$PREFIX-$SERVICE-instance-group-$POSTFIX" \
     --size "1" \
     --template "$TEMPLATENAME" \
+    --base-instance-name "$PREFIX-$SERVICE-instance-$POSTFIX" \
     --zone "us-west1-a" \
-    --description= "hello-go from Jeffs Repo hello-go-deploy-gce"
+    --description "hello-go from Jeffs Repo hello-go-deploy-gce"
 ```
 
 Check on `gce` that the instance group and VM instance was created,

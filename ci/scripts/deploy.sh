@@ -42,7 +42,8 @@ echo "List whats in the current directory"
 ls -la
 echo " "
 
-echo "STEP ONE Build the image"
+echo "STEP ONE - Build the image"
+echo " "
 
 echo "deploy.sh (END)"
 echo " "

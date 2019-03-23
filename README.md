@@ -1,10 +1,5 @@
 # hello-go-deploy-gce
 
-```text
-*** THE DEPLOY IS UNDER CONSTRUCTION - CHECK BACK SOON ***
-For testing this Repo, I'm temporarily using using mesos/marathon.
-```
-
 [![Go Report Card](https://goreportcard.com/badge/github.com/JeffDeCola/hello-go-deploy-gce)](https://goreportcard.com/report/github.com/JeffDeCola/hello-go-deploy-gce)
 [![GoDoc](https://godoc.org/github.com/JeffDeCola/hello-go-deploy-gce?status.svg)](https://godoc.org/github.com/JeffDeCola/hello-go-deploy-gce)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1dff96727b972dd4cda4/maintainability)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/maintainability)
@@ -165,15 +160,19 @@ for more detailed information and some nice illustrations.
 There are three steps to deployment on `gce`,
 
 * Build a custom `image` using `packer` -
-  Your boot disk that contains all your stuff (docker container).
+  Your boot disk that contains all your stuff (the `hello-go-deploy-gce` docker image).
 * Create an `instance template` - What HW resources you want for your VM instance.
 * Create an `instance group` - Will deploy and scale you VM instance(s).
 
-The end goal is to have your service `hello-go-deploy-gce` running on `gce`.
+The end goal is to have your service (the dockerhub image) `hello-go-deploy-gce`
+running on a `gce` VM.
 
 ### 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
-Packer will be used to create the gce custom machine `image`.
+Packer will be used to create the gce custom machine `image` from the
+[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/build-image/gce-packer-template-json).
+
+Run this command,
 
 ```bash
 packer $command \
@@ -181,6 +180,13 @@ packer $command \
     -var "project_id=$GOOGLE_JEFFS_PROJECT_ID" \
     gce-packer-template.json
 ```
+
+Inside the packer template file the following configurations and provisions
+were done on the soon to be custom machine image,
+
+* `add-user-jeff.sh` - Add jeff as a user.
+* tbd
+* tbd
 
 Check on `gce` that the image was created,
 
@@ -190,12 +196,15 @@ gcloud compute images list --no-standard-images
 
 Refer to my
 [create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine-create-image-packer.md)
-for more detailed information on how to do this.
+cheat sheet for more detailed information on how to do this.
 
 This script runs the create a custom `image` (using packer) commands.
 [/gce-deploy/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/build-image/build-image.sh).
 
 ### 4.2 CREATE AN INSTANCE TEMPLATE
+
+The `instance template` contains the HW resources the `instance group`
+needs to create the VM instance.
 
 Run the following to create the instance template,
 
@@ -231,7 +240,13 @@ gcloud compute instance-templates list
 This script runs the create an `instance template` commands.
 [/gce-deploy/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance-template/create-instance-template.sh).
 
+Online docs [here](https://cloud.google.com/sdk/gcloud/reference/compute/instance-templates/create)
+to create instance template.
+
 ### 4.3 CREATE AN INSTANCE GROUP
+
+The instance group controls the show. It launches your VM instance
+and scales your VM instances as needed.
 
 ```bash
 TEMPLATENAME="$1"
@@ -261,6 +276,28 @@ This script runs the create an `instance group` commands.
 
 Lastly, this script runs all of the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
+
+Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
+or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
+instance group.
+
+### 4.4 AUTOSCALING (OPTIONAL)
+
+Since the instance group controls the show, lets autosclae up to 2 CMs based on ??
+
+tbd
+
+```bash
+gcloud compute instance-groups managed set-autoscaling
+tbd
+```
+
+This script configures the autopscalling for `the instance groups`
+[/gce-deploy/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance-group/autoscaling.sh).
+
+Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
+or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
+instance group.
 
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 

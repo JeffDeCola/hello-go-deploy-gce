@@ -1,20 +1,10 @@
-{
-    "variables": {
-        "_comment1": "jeff-test-goodbye-provisioning-{{isotime \"20060102030405\"}}",
-        "_comment2": "jeff-test-goodbye-{{isotime \"20060102030405\"}}",
 
-  
-    
                 "install-scripts/upgrade-system.sh",
                 "install-scripts/install-packages.sh",
                 "install-scripts/install-go.sh",
                 "install-scripts/install-service.sh",
                 "install-scripts/install-consul-template.sh",
                 "install-scripts/enable-service.sh"
-            ]
-        }
-    ]
-}
 
 
 echo " "

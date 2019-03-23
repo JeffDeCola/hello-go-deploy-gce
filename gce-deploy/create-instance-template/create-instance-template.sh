@@ -43,7 +43,7 @@ gcloud compute \
     --boot-disk-size "10" \
     --boot-disk-type "pd-standard" \
     --boot-disk-device-name "$PREFIX-$SERVICE-disk-$POSTFIX" \
-    --description "hello-go from Jeffs Repo hello-go-deploy-gce" \
+    --description "Instance Template for Jeffs Repo hello-go-deploy-gce" \
     --region "us-west1"
     # --service-account=SERVICE_ACCOUNT
     # --preemptible \

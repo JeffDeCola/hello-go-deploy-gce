@@ -40,7 +40,7 @@ gcloud compute \
     --template "$TEMPLATENAME" \
     --base-instance-name "$PREFIX-$SERVICE-instance-$POSTFIX" \
     --zone "us-west1-a" \
-    --description "hello-go from Jeffs Repo hello-go-deploy-gce"
+    --description "Instance Group for Jeffs Repo hello-go-deploy-gce"
 echo ""
 
 echo "create-instance-group.sh (END)"

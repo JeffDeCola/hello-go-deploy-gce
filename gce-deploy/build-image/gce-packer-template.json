@@ -8,7 +8,7 @@
         "zone": "us-west1-a",
         "source_image": "ubuntu-1604-xenial-v20190306",
         "image_name": "hello-go",
-        "image_description": "hello-go from Jeffs Repo hello-go-deploy-gce",
+        "image_description": "GCE custom machine image for Jeffs Repo hello-go-deploy-gce",
         "disk_size": "10",
         "disk_type": "pd-standard",
         "machine_type": "n1-standard-1"

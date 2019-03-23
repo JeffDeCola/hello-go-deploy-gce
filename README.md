@@ -6,14 +6,16 @@
 [![Issue Count](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/issues)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-`hello-go-deploy-gce` _uses Concourse CI to test, build, push (to DockerHub)
-and deploy a long running "hello-world" Docker Image to Google Compute Engine (gce)._
+`hello-go-deploy-gce` _will test, build, push (to DockerHub) and deploy
+a long running "hello-world" Docker Image to Google Compute Engine (gce)._
 
 I also have other repos showing different deployments,
 
 * [hello-go-deploy-aws](https://github.com/JeffDeCola/hello-go-deploy-aws)
 * [hello-go-deploy-azure](https://github.com/JeffDeCola/hello-go-deploy-azure)
 * [hello-go-deploy-gae](https://github.com/JeffDeCola/hello-go-deploy-gae)
+* hello-go-deploy-gce
+* [hello-go-deploy-gke](https://github.com/JeffDeCola/hello-go-deploy-gke)
 * [hello-go-deploy-marathon](https://github.com/JeffDeCola/hello-go-deploy-marathon)
 
 The `hello-go-deploy-gce`
@@ -170,7 +172,7 @@ running on a `gce` VM.
 ### 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
 Packer will be used to create the gce custom machine `image` from the
-[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/build-image/gce-packer-template-json).
+[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/gce-packer-template-json).
 
 Run this command,
 
@@ -199,7 +201,7 @@ Refer to my
 cheat sheet for more detailed information on how to do this.
 
 This script runs the create a custom `image` (using packer) commands.
-[/gce-deploy/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/build-image/build-image.sh).
+[/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/build-image.sh).
 
 ### 4.2 CREATE AN INSTANCE TEMPLATE
 
@@ -238,7 +240,7 @@ gcloud compute instance-templates list
 ```
 
 This script runs the create an `instance template` commands.
-[/gce-deploy/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance-template/create-instance-template.sh).
+[/deploy-gce/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-template/create-instance-template.sh).
 
 Online docs [here](https://cloud.google.com/sdk/gcloud/reference/compute/instance-templates/create)
 to create instance template.
@@ -272,7 +274,7 @@ gcloud compute instances list
 ```
 
 This script runs the create an `instance group` commands.
-[/gce-deploy/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance-group/create-instance-group.sh).
+[/deploy-gce/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/create-instance-group.sh).
 
 Lastly, this script runs all of the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
@@ -293,7 +295,7 @@ tbd
 ```
 
 This script configures the autopscalling for `the instance groups`
-[/gce-deploy/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/gce-deploy/create-instance-group/autoscaling.sh).
+[/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/autoscaling.sh).
 
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
 or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]

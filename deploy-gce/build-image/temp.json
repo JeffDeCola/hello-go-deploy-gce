@@ -1,15 +1,6 @@
 
-                "install-scripts/upgrade-system.sh",
                 "install-scripts/install-packages.sh",
                 "install-scripts/install-go.sh",
                 "install-scripts/install-service.sh",
                 "install-scripts/install-consul-template.sh",
                 "install-scripts/enable-service.sh"
-
-
-echo " "
-[ -d /root/.ssh ] || mkdir /root/.ssh
-
-echo "ssh-keygen for github"
-ssh-keyscan github.com >> /root/.ssh/known_hosts
-echo " "

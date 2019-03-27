@@ -27,7 +27,10 @@ The `hello-go-deploy-gce`
 
 ## PREREQUISITES
 
-For this exercise I used go.  Feel free to use a language of your choice,
+For this exercise I used go.  Feel free to use a language of your choice.
+Obviously, you will have to build the binaries and install your language
+on the VM Instance during the packer build.  It should not be that difficult
+to swap.
 
 * [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet)
 
@@ -186,9 +189,17 @@ packer $command \
 Inside the packer template file the following configurations and provisions
 were done on the soon to be custom machine image,
 
-* `add-user-jeff.sh` - Add jeff as a user.
-* tbd
-* tbd
+* add-user-jeff.sh - Add jeff as a user.
+* move-welcome-file.sh - Add a welcome file in /home/jeff for fun.
+* setup-github-ssh-keys.sh - Connect to github.
+* upgrade-system.sh - update and upgrade.
+* install-packages.sh - apt-get stuff.
+* install-docker.sh - Install docker.
+* install-go.sh - Install go.
+* pull-private-repos.sh - Get this repo, place in /root/src.
+* install-service.sh - Build the service.
+* enable-service-boot.sh - enable at boot.
+* enable-docker-container-boot.sh - Enable docker container at boot.
 
 Check on `gce` that the image was created,
 
@@ -266,7 +277,7 @@ gcloud compute \
     --description "hello-go from Jeffs Repo hello-go-deploy-gce"
 ```
 
-Check on `gce` that the instance group and VM instance was created,
+Check on `gce` that the `instance group` and VM `instance` was created,
 
 ```bash
 gcloud compute instance-groups list
@@ -285,13 +296,10 @@ instance group.
 
 ### 4.4 AUTOSCALING (OPTIONAL)
 
-Since the instance group controls the show, lets autosclae up to 2 CMs based on ??
-
-tbd
+tbd at a later date.
 
 ```bash
 gcloud compute instance-groups managed set-autoscaling
-tbd
 ```
 
 This script configures the autopscalling for `the instance groups`
@@ -300,6 +308,27 @@ This script configures the autopscalling for `the instance groups`
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
 or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
 instance group.
+
+## CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE
+
+`ssh` into your VM instance.  I would do this from the gce console.
+
+Check the logs (stdout) of the running docker container.
+Remember, you must be root.
+
+```bash
+sudo su
+docker ps
+docker logs -f hello-go
+```
+
+Check that your service is running,
+
+```bash
+journalctl -f
+```
+
+That's it, you did a lot, have a beer and I hope you had fun.
 
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 

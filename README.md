@@ -189,6 +189,10 @@ packer $command \
 Inside the packer template file the following configurations and provisions
 were done on the soon to be custom machine image,
 
+To be able to clone a repo, you will need to have a public/private ssh keys setup
+and the public one at github.  You will have to change the link in the packer
+template file to point to these keys.
+
 * add-user-jeff.sh - Add jeff as a user.
 * move-welcome-file.sh - Add a welcome file in /home/jeff for fun.
 * setup-github-ssh-keys.sh - Connect to github.
@@ -296,7 +300,7 @@ instance group.
 
 ### 4.4 AUTOSCALING (OPTIONAL)
 
-tbd at a later date.
+I'll eventually do this at a later date.
 
 ```bash
 gcloud compute instance-groups managed set-autoscaling
@@ -311,7 +315,7 @@ instance group.
 
 ## CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE
 
-`ssh` into your VM instance.  I would do this from the gce console.
+`ssh` into your VM instance.  This is easy from the gce console.
 
 Check the logs (stdout) of the running docker container.
 Remember, you must be root.

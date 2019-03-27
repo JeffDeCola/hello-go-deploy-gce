@@ -1,6 +1,0 @@
-
-                "install-scripts/install-packages.sh",
-                "install-scripts/install-go.sh",
-                "install-scripts/install-service.sh",
-                "install-scripts/install-consul-template.sh",
-                "install-scripts/enable-service.sh"

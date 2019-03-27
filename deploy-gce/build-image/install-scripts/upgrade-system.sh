@@ -2,7 +2,8 @@
 # hello-go-deploy-gce upgrade-system.sh
 
 echo " " 
-echo "upgrade-system.sh (START)"
+echo "******************************* upgrade-system.sh (START)"
+echo "You are root in /home/packer"
 echo " "
 
 echo "update/upgrade system"
@@ -34,5 +35,5 @@ echo " "
 #echo "fs.inotify.max_user_watches=100000" >> /etc/sysctl.conf
 #echo " "
 
-echo "upgrade-system.sh (END)"
+echo "******************************* upgrade-system.sh (END)"
 echo " "

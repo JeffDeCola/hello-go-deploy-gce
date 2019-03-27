@@ -41,14 +41,31 @@
             "destination": "/tmp/welcome.txt"
         },
         {
+            "type": "file",
+            "source": "/home/jeff/.ssh/gce-github-vm.pub",
+            "destination": "/tmp/gce-github-vm.pub"
+        },
+        {
+            "type": "file",
+            "source": "/home/jeff/.ssh/gce-github-vm",
+            "destination": "/tmp/gce-github-vm"
+        },
+        {
             "type": "shell",
-            "pause_before": "10s",
+            "pause_before": "4s",
             "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E {{ .Path }}",
             "scripts": [
                 "./install-scripts/add-user-jeff.sh",
                 "./install-scripts/move-welcome-file.sh",
-                "./install-scripts/add-github-ssh-keys.sh",
-                "./install-scripts/upgrade-system.sh"
+                "./install-scripts/setup-github-ssh-keys.sh",
+                "./install-scripts/upgrade-system.sh",
+                "./install-scripts/install-packages.sh",
+                "./install-scripts/install-docker.sh",
+                "./install-scripts/install-go.sh",
+                "./install-scripts/pull-private-repos.sh",
+                "./install-scripts/install-service.sh",
+                "./install-scripts/enable-service-boot.sh",
+                "./install-scripts/enable-docker-container-boot.sh"
             ]
         }
     ]

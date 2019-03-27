@@ -190,7 +190,7 @@ Inside the packer template file the following configurations and provisions
 were done on the soon to be custom machine image,
 
 To be able to clone a repo, you will need to have a public/private ssh keys setup
-and the public one at github.  You will have to change the link in the packer
+and the public key at github.  You will have to change the link in the packer
 template file to point to these keys.
 
 * add-user-jeff.sh - Add jeff as a user.

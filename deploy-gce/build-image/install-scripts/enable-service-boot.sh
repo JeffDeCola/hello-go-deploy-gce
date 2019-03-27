@@ -8,7 +8,7 @@ echo "You are root in /home/packer"
 echo " "
 
 echo "Copy hello-go.service file to /lib/systemd/system/"
-cp /root/src/github.com/hello-go-deploy-gce/deploy-gce/build-image/hello-go.service /lib/systemd/system/.
+cp /root/src/github.com/JeffDeCola/hello-go-deploy-gce/deploy-gce/build-image/hello-go.service /lib/systemd/system/.
 echo " "
 
 echo "chmod 644 on hello-go.service"

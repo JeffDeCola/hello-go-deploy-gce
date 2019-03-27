@@ -9,7 +9,7 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-if [ "$2" = "-debug" ]
+if [ "$2" = "-debug" ] || [ "$1" = "-debug" ]
 then
     echo "create-instance-template.sh -debug (START)"
     echo " "

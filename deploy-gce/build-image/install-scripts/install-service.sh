@@ -7,6 +7,13 @@ echo "******************************************* install-service.sh (START) *"
 echo "You are root in /home/packer"
 echo " "
 
+echo "Create go environment variables"
+export GOPATH="/root"
+export GOROOT="/usr/local/go"
+export GOBIN=$GOPATH/bin
+export PATH=$GOROOT/bin::$GOBIN:$PATH
+echo " "
+
 echo "cd into /root/src/github.com/JeffDeCola/hello-go-deploy-gce"
 cd /root/src/github.com/JeffDeCola/hello-go-deploy-gce
 echo " "

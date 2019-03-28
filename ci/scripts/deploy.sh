@@ -40,6 +40,16 @@ echo "cd hello-go-deploy-gce/deploy-gce/build-image"
 cd hello-go-deploy-gce/deploy-gce/build-image
 echo " "
 
+echo "Note: $GOOGLE_JEFFS_PROJECT_ID env variable already preset"
+echo " "
+
+echo "Write credential.json file from preset $GOOGLE_APPLICATION_CREDENTIALS_FILE"
+echo "$GOOGLE_APPLICATION_CREDENTIALS_FILE" | base64 -d > google-credentials.json
+
+echo "Set $GOOGLE_APPLICATION_CREDENTIALS (file location) env variable"
+GOOGLE_APPLICATION_CREDENTIALS="google-credentials.json"
+echo " "
+
 echo "Kick off build-image.sh"
 sh build-image.sh
 echo " "

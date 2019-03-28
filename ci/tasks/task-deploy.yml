@@ -8,6 +8,10 @@ image_resource:
     repository: jeffdecola/go-packer
     tag: latest
 
+params:
+  GOOGLE_APPLICATION_CREDENTIALS_FILE: "this will be overwritten"
+  GOOGLE_JEFFS_PROJECT_ID: "this will be overwritten"
+
 inputs:
 - name: hello-go-deploy-gce
 

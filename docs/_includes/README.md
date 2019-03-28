@@ -312,6 +312,16 @@ That's it, you did a lot, have a beer and I hope you had fun.
 
 For fun, I use concourse to automate the above steps.
 
+In order to use concourse, you must deal with secrets,
+
+* Google service account file
+* Public/private keys for packer to pull github repos
+* Name of google project at gce
+
+You must also have a docker container that has go and packer installed,
+
+* I use mine I created in [my-docker-image-builds](https://github.com/JeffDeCola/my-docker-image-builds)
+
 A pipeline file [pipeline.yml](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/pipeline.yml)
 shows the entire ci flow. Visually, it looks like,
 

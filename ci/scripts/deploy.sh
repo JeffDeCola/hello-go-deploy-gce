@@ -43,11 +43,19 @@ echo " "
 echo "Note: $GOOGLE_JEFFS_PROJECT_ID env variable already preset"
 echo " "
 
-echo "Write credential.json file from preset $GOOGLE_APPLICATION_CREDENTIALS_FILE"
-echo "$GOOGLE_APPLICATION_CREDENTIALS_FILE" | base64 -d > google-credentials.json
+echo "Write credential.json file to /root from preset $GOOGLE_APPLICATION_CREDENTIALS_FILE"
+echo "$GOOGLE_APPLICATION_CREDENTIALS_FILE" | base64 -d > /root/google-credentials.json
 
 echo "Set $GOOGLE_APPLICATION_CREDENTIALS (file location) env variable"
-GOOGLE_APPLICATION_CREDENTIALS="google-credentials.json"
+GOOGLE_APPLICATION_CREDENTIALS="/root/google-credentials.json"
+echo " "
+
+echo "Check $GOOGLE_APPLICATION_CREDENTIALS path"
+echo $GOOGLE_APPLICATION_CREDENTIALS
+echo " "
+
+echo "Check $GOOGLE_APPLICATION_CREDENTIALS file"
+cat $GOOGLE_APPLICATION_CREDENTIALS
 echo " "
 
 echo "Make /root/.ssh"

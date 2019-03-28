@@ -1,6 +1,7 @@
 {
     "variables": {
         "prefix": "jeff",
+        "user_home":"{{env `HOME`}}",
         "postfix": "{{isotime \"20060102\"}}",
         "ssh_username": "packer",
         "account_file": "",
@@ -42,12 +43,12 @@
         },
         {
             "type": "file",
-            "source": "/home/jeff/.ssh/gce-github-vm.pub",
+            "source": "{{user `user_home`}}/.ssh/gce-github-vm.pub",
             "destination": "/tmp/gce-github-vm.pub"
         },
         {
             "type": "file",
-            "source": "/home/jeff/.ssh/gce-github-vm",
+            "source": "{{user `user_home`}}/.ssh/gce-github-vm",
             "destination": "/tmp/gce-github-vm"
         },
         {

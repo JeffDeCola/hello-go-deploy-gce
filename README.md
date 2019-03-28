@@ -344,9 +344,11 @@ In order to use concourse, you must deal with secrets,
 * Public/private keys for packer to pull github repos
 * Name of google project at gce
 
-You must also have a docker container that has go and packer installed,
+You must also have a docker container that has go, gcloud and packer installed,
 
-* I use mine I created in [my-docker-image-builds](https://github.com/JeffDeCola/my-docker-image-builds)
+* I use my
+  [go-gcloud-packer docker Image](https://hub.docker.com/r/jeffdecola/go-gcloud-packer)
+  I created in [my-docker-image-builds](https://github.com/JeffDeCola/my-docker-image-builds)
 
 A pipeline file [pipeline.yml](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/pipeline.yml)
 shows the entire ci flow. Visually, it looks like,

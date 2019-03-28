@@ -50,14 +50,6 @@ echo "Set $GOOGLE_APPLICATION_CREDENTIALS (file location) env variable"
 GOOGLE_APPLICATION_CREDENTIALS="/root/google-credentials.json"
 echo " "
 
-echo "Check $GOOGLE_APPLICATION_CREDENTIALS path"
-echo $GOOGLE_APPLICATION_CREDENTIALS
-echo " "
-
-echo "Check $GOOGLE_APPLICATION_CREDENTIALS file"
-cat $GOOGLE_APPLICATION_CREDENTIALS
-echo " "
-
 echo "Make /root/.ssh"
 [ -d /root/.ssh ] || mkdir /root/.ssh
 echo " "

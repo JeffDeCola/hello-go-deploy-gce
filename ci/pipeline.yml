@@ -115,6 +115,9 @@ jobs:
       params: { state: "pending", description: "STARTED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
     - task: task-deploy
       file: hello-go-deploy-gce/ci/tasks/task-deploy.yml
+      params:
+        GOOGLE_APPLICATION_CREDENTIALS_FILE: {{google_application_credentials_file}}
+        GOOGLE_JEFFS_PROJECT_ID: {{google_jeffs_project_id}}
       on_success:
         do:
         - put: resource-slack-alert

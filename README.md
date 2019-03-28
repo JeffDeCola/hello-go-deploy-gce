@@ -172,7 +172,7 @@ There are three steps to deployment on `gce`,
 The end goal is to have your service (the dockerhub image) `hello-go-deploy-gce`
 running on a `gce` VM.
 
-### 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
+### STEP 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
 Packer will be used to create the gce custom machine `image` from the
 [packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/gce-packer-template-json).
@@ -189,9 +189,9 @@ packer $command \
 Inside the packer template file the following configurations and provisions
 were done on the soon to be custom machine image,
 
-To be able to clone a repo, you will need to have a public/private ssh keys setup
-and the public key at github.  You will have to change the link in the packer
-template file to point to these keys.
+To be able to clone a repo, you will need to create public/private
+(`gce-github-vm` & `gce-github-vm.pub`) ssh keys and put the public
+key at github. Place these keys in your `~/.ssh` folder.
 
 * add-user-jeff.sh - Add jeff as a user.
 * move-welcome-file.sh - Add a welcome file in /home/jeff for fun.
@@ -218,7 +218,7 @@ cheat sheet for more detailed information on how to do this.
 This script runs the create a custom `image` (using packer) commands.
 [/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/build-image.sh).
 
-### 4.2 CREATE AN INSTANCE TEMPLATE
+### STEP 4.2 CREATE AN INSTANCE TEMPLATE
 
 The `instance template` contains the HW resources the `instance group`
 needs to create the VM instance.
@@ -260,7 +260,7 @@ This script runs the create an `instance template` commands.
 Online docs [here](https://cloud.google.com/sdk/gcloud/reference/compute/instance-templates/create)
 to create instance template.
 
-### 4.3 CREATE AN INSTANCE GROUP
+### STEP 4.3 CREATE AN INSTANCE GROUP
 
 The instance group controls the show. It launches your VM instance
 and scales your VM instances as needed.
@@ -298,7 +298,7 @@ Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/co
 or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
 instance group.
 
-### 4.4 AUTOSCALING (OPTIONAL)
+### STEP 4.4 AUTOSCALING (OPTIONAL)
 
 I'll eventually do this at a later date.
 

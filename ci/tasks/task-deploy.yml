@@ -5,8 +5,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: golang
-    tag: 1.7.1
+    repository: jeffdecola/hello-go-deploy-gce-packer-image
+    tag: latest
 
 inputs:
 - name: hello-go-deploy-gce

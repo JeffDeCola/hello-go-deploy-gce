@@ -118,6 +118,8 @@ jobs:
       params:
         GOOGLE_APPLICATION_CREDENTIALS_FILE: {{google_application_credentials_file}}
         GOOGLE_JEFFS_PROJECT_ID: {{google_jeffs_project_id}}
+        GCE-GITHUB-VM-FILE: {{gce-github-vm-file}}
+        GCE-GITHUB-VM-PUB-FILE: {{gce-github-vm-pub-file}}
       on_success:
         do:
         - put: resource-slack-alert

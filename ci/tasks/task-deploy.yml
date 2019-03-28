@@ -11,6 +11,8 @@ image_resource:
 params:
   GOOGLE_APPLICATION_CREDENTIALS_FILE: "this will be overwritten"
   GOOGLE_JEFFS_PROJECT_ID: "this will be overwritten"
+  GCE-GITHUB-VM-FILE: "this will be overwritten"
+  GCE-GITHUB-VM-PUB-FILE: "this will be overwritten"
 
 inputs:
 - name: hello-go-deploy-gce

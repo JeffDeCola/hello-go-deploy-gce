@@ -50,6 +50,14 @@ echo "Set $GOOGLE_APPLICATION_CREDENTIALS (file location) env variable"
 GOOGLE_APPLICATION_CREDENTIALS="google-credentials.json"
 echo " "
 
+echo "Write private key to $HOME/.ssh/gce-github-vm"
+echo "$GCE-GITHUB-VM-FILE" | base64 -d > "$HOME/.ssh/gce-github-vm"
+echo " "
+
+echo "Write public key to $HOME/.ssh/gce-github-vm.pub"
+echo "$GCE-GITHUB-VM-PUB-FILE" | base64 -d > "$HOME/.ssh/gce-github-vm.pub"
+echo " "
+
 echo "Kick off build-image.sh"
 sh build-image.sh
 echo " "

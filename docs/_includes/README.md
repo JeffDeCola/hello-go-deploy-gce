@@ -1,7 +1,10 @@
 
 # PREREQUISITES
 
-For this exercise I used go.  Feel free to use a language of your choice,
+For this exercise I used go.  Feel free to use a language of your choice.
+Obviously, you will have to build the binaries and install your language
+on the VM Instance during the packer build.  It should not be that difficult
+to swap.
 
 * [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet)
 
@@ -135,15 +138,15 @@ for more detailed information and some nice illustrations.
 
 There are three steps to deployment on `gce`,
 
-* Build a custom `image` using `packer` -
+* STEP 4.1 - Build a custom `image` using `packer` -
   Your boot disk that contains all your stuff (the `hello-go-deploy-gce` docker image).
-* Create an `instance template` - What HW resources you want for your VM instance.
-* Create an `instance group` - Will deploy and scale you VM instance(s).
+* STEP 4.2 - Create an `instance template` - What HW resources you want for your VM instance.
+* STEP 4.3 - Create an `instance group` - Will deploy and scale you VM instance(s).
 
 The end goal is to have your service (the dockerhub image) `hello-go-deploy-gce`
 running on a `gce` VM.
 
-### 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
+### STEP 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
 Packer will be used to create the gce custom machine `image` from the
 [packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/gce-packer-template-json).
@@ -160,9 +163,21 @@ packer $command \
 Inside the packer template file the following configurations and provisions
 were done on the soon to be custom machine image,
 
-* `add-user-jeff.sh` - Add jeff as a user.
-* tbd
-* tbd
+To be able to clone a repo, you will need to create public/private
+(`gce-github-vm` & `gce-github-vm.pub`) ssh keys and put the public
+key at github. Place these keys in your `~/.ssh` folder.
+
+* add-user-jeff.sh - Add jeff as a user.
+* move-welcome-file.sh - Add a welcome file in /home/jeff for fun.
+* setup-github-ssh-keys.sh - Connect to github.
+* upgrade-system.sh - update and upgrade.
+* install-packages.sh - apt-get stuff.
+* install-docker.sh - Install docker.
+* install-go.sh - Install go 1.10.3.
+* pull-private-repos.sh - Get this repo, place in /root/src.
+* install-service.sh - Build the service.
+* enable-service-boot.sh - enable at boot.
+* enable-docker-container-boot.sh - Enable docker container at boot.
 
 Check on `gce` that the image was created,
 
@@ -177,7 +192,7 @@ cheat sheet for more detailed information on how to do this.
 This script runs the create a custom `image` (using packer) commands.
 [/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/build-image.sh).
 
-### 4.2 CREATE AN INSTANCE TEMPLATE
+### STEP 4.2 CREATE AN INSTANCE TEMPLATE
 
 The `instance template` contains the HW resources the `instance group`
 needs to create the VM instance.
@@ -219,7 +234,7 @@ This script runs the create an `instance template` commands.
 Online docs [here](https://cloud.google.com/sdk/gcloud/reference/compute/instance-templates/create)
 to create instance template.
 
-### 4.3 CREATE AN INSTANCE GROUP
+### STEP 4.3 CREATE AN INSTANCE GROUP
 
 The instance group controls the show. It launches your VM instance
 and scales your VM instances as needed.
@@ -240,7 +255,7 @@ gcloud compute \
     --description "hello-go from Jeffs Repo hello-go-deploy-gce"
 ```
 
-Check on `gce` that the instance group and VM instance was created,
+Check on `gce` that the `instance group` and VM `instance` was created,
 
 ```bash
 gcloud compute instance-groups list
@@ -257,15 +272,12 @@ Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/co
 or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
 instance group.
 
-### 4.4 AUTOSCALING (OPTIONAL)
+### STEP 4.4 AUTOSCALING (OPTIONAL)
 
-Since the instance group controls the show, lets autosclae up to 2 CMs based on ??
-
-tbd
+I'll eventually do this at a later date.
 
 ```bash
 gcloud compute instance-groups managed set-autoscaling
-tbd
 ```
 
 This script configures the autopscalling for `the instance groups`
@@ -274,6 +286,27 @@ This script configures the autopscalling for `the instance groups`
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
 or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
 instance group.
+
+## CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE
+
+`ssh` into your VM instance.  This is easy from the gce console.
+
+Check the logs (stdout) of the running docker container.
+Remember, you must be root.
+
+```bash
+sudo su
+docker ps
+docker logs -f hello-go
+```
+
+Check that your service is running,
+
+```bash
+journalctl -f
+```
+
+That's it, you did a lot, have a beer and I hope you had fun.
 
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 

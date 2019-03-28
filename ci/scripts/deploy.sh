@@ -17,32 +17,54 @@ else
     echo " "
 fi
 
+PREFIX="jeff"
+SERVICE="hello-go"
+#POSTFIX=$(date -u +%Y%m%d-%H%M)
+POSTFIX=$(date -u +%Y%m%d)
+
 echo "The goal is to send the docker image to gce"
-echo ""
-echo ""
-echo ""
+echo "   This will be done in 3 steps"
+echo "   STEP 1 - Build a custom image using packer"
+echo "   STEP 2 - Create an instance template "
+echo "   STEP 3 - Create an instance group"
 echo " "
 
-echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
+echo "At start, you should be in a /tmp/build/xxxxx directory with one folder:"
 echo "   /hello-go-deploy-gce"
 echo " "
 
-echo "pwd is: $PWD"
+echo "STEP 1 - Build a custom image using packer"
+echo "Your boot disk that contains all your stuff (the hello-go-deploy-gce docker image)"
+
+echo "cd hello-go-deploy-gce/deploy-gce/build-image"
+cd hello-go-deploy-gce/deploy-gce/build-image
 echo " "
 
-echo "List whats in the current directory"
-ls -la
+echo "Kick off build-image.sh"
+sh build-image.sh
 echo " "
 
-echo "cd hello-go-deploy-gce"
-cd hello-go-deploy-gce
+echo "STEP 2 - Create an instance template"
+echo "What HW resources you want for your VM instance"
+
+echo "cd in create-instance-template folder"
+cd ../create-instance-template
 echo " "
 
-echo "List whats in the current directory"
-ls -la
+echo "Kick off create-instance-template.sh"
+sh create-instance-template.sh "$PREFIX-$SERVICE-inmage-$POSTFIX"
 echo " "
 
-echo "STEP ONE - Build the image"
+echo "STEP 3 - Create an instance group"
+echo "Will deploy and scale you VM instance(s)"
+echo " "
+
+echo "cd in create-instance-group folder"
+cd ../create-instance-group
+echo " "
+
+echo "Kick off create-instance-group.sh"
+sh create-instance-group.sh "$PREFIX-$SERVICE-instance-template-$POSTFIX"
 echo " "
 
 echo "deploy.sh (END)"

@@ -164,10 +164,10 @@ for more detailed information and some nice illustrations.
 
 There are three steps to deployment on `gce`,
 
-* Build a custom `image` using `packer` -
+* STEP 4.1 - Build a custom `image` using `packer` -
   Your boot disk that contains all your stuff (the `hello-go-deploy-gce` docker image).
-* Create an `instance template` - What HW resources you want for your VM instance.
-* Create an `instance group` - Will deploy and scale you VM instance(s).
+* STEP 4.2 - Create an `instance template` - What HW resources you want for your VM instance.
+* STEP 4.3 - Create an `instance group` - Will deploy and scale you VM instance(s).
 
 The end goal is to have your service (the dockerhub image) `hello-go-deploy-gce`
 running on a `gce` VM.
@@ -199,7 +199,7 @@ key at github. Place these keys in your `~/.ssh` folder.
 * upgrade-system.sh - update and upgrade.
 * install-packages.sh - apt-get stuff.
 * install-docker.sh - Install docker.
-* install-go.sh - Install go.
+* install-go.sh - Install go 1.10.3.
 * pull-private-repos.sh - Get this repo, place in /root/src.
 * install-service.sh - Build the service.
 * enable-service-boot.sh - enable at boot.

@@ -55,11 +55,11 @@ echo "Make /root/.ssh"
 echo " "
 
 echo "Write private key to /root/.ssh/gce-github-vm"
-echo "$GCE-GITHUB-VM-FILE" | base64 -d > "/root/.ssh/gce-github-vm"
+echo "$GCE_GITHUB_VM_FILE" | base64 -d > "/root/.ssh/gce-github-vm"
 echo " "
 
 echo "Write public key to /root/.ssh/gce-github-vm.pub"
-echo "$GCE-GITHUB-VM-PUB-FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
+echo "$GCE_GITHUB_VM_PUB_FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
 echo " "
 
 echo "Kick off build-image.sh"

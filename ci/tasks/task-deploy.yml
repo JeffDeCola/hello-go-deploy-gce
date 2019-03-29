@@ -5,8 +5,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: golang
-    tag: 1.7.1
+    repository: jeffdecola/go-gcloud-packer
+    tag: latest
 
 params:
   GOOGLE_APPLICATION_CREDENTIALS_FILE: "this will be overwritten"

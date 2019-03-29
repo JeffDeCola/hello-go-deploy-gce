@@ -58,8 +58,9 @@ echo "Write public key to /root/.ssh/gce-github-vm.pub"
 echo "$GCE_GITHUB_VM_PUB_FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
 echo " "
 
-echo " gcloud auth"
-gcloud auth activate-service-account "$GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS" --key-file $GOOGLE_APPLICATION_CREDENTIALS
+echo "gcloud auth"
+echo gcloud auth activate-service-account "$GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS" --key-file "$GOOGLE_APPLICATION_CREDENTIALS"
+gcloud auth activate-service-account "$GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS" --key-file "$GOOGLE_APPLICATION_CREDENTIALS"
 echo " "
 
 echo "gcloud config set project $GOOGLE_JEFFS_PROJECT_ID"

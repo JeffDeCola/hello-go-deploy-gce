@@ -338,7 +338,7 @@ That's it, you did a lot, have a beer and I hope you had fun.
 
 Here is an illustration showing how everything fits together,
 
-![IMAGE -  google compute engine app service view instance groups - IMAGE](https://github.com/JeffDeCola/my-cheat-sheets/blob/master/docs/pics/gce-app-service-view-instance-groups.jpg)
+![IMAGE -  google compute engine creating deploying custom image - IMAGE](https://github.com/JeffDeCola/my-cheat-sheets/blob/master/docs/pics/gce-overview-creating-deploying-custom-image.jpg)
 
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 

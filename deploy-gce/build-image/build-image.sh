@@ -9,19 +9,18 @@ echo " "
 
 if [ "$1" = "-debug" ]
 then
-    echo "build-image.sh -debug (START)"
-    echo " "
-    # set -x enables a mode of the shell where all executed commands are printed to the terminal.
+    echo "debug mode on (set-x)"
     set -x
-    echo " "
-else
-    echo " "
-    echo "build-image.sh (START)"
     echo " "
 fi
 
 echo "The goal is to create a custom image on gce using packer."
 echo " "
+
+echo "ERASE ME TEST - ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+echo "$GOOGLE_JEFFS_PROJECT_ID"
+echo "$GOOGLE_APPLICATION_CREDENTIALS"
+echo "ERASE ME TEST - ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 
 echo "Check for -v switch"
 if [ "$1" = "-v" ]

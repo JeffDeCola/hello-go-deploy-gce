@@ -47,7 +47,7 @@ echo "Write credential.json file to /root from preset $GOOGLE_APPLICATION_CREDEN
 echo "$GOOGLE_APPLICATION_CREDENTIALS_FILE" | base64 -d > /root/google-credentials.json
 
 echo "Set $GOOGLE_APPLICATION_CREDENTIALS (file location) env variable"
-GOOGLE_APPLICATION_CREDENTIALS="/root/google-credentials.json"
+export GOOGLE_APPLICATION_CREDENTIALS="/root/google-credentials.json"
 echo " "
 
 echo "Make /root/.ssh"
@@ -61,6 +61,11 @@ echo " "
 echo "Write public key to /root/.ssh/gce-github-vm.pub"
 echo "$GCE_GITHUB_VM_PUB_FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
 echo " "
+
+echo "ERASE ME TEST - aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+echo "$GOOGLE_JEFFS_PROJECT_ID"
+echo "$GOOGLE_APPLICATION_CREDENTIALS"
+echo "ERASE ME TEST - bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 
 echo "Kick off build-image.sh"
 sh build-image.sh

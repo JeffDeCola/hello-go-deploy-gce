@@ -11,7 +11,7 @@ echo "mkdir /tmp/go"
 mkdir -p /tmp/go
 echo " "
 
-echo "Download go1.7.1 (wget quiet mode), untar and move to /usr/local"
+echo "Download go1.10.3 (wget quiet mode), untar and move to /usr/local"
 wget -q https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz
 tar -xf go1.10.3.linux-amd64.tar.gz
 mv go /usr/local

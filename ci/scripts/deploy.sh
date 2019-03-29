@@ -86,7 +86,7 @@ cd ../create-instance-template
 echo " "
 
 echo "Kick off create-instance-template.sh"
-sh create-instance-template.sh "$PREFIX-$SERVICE-inmage-$POSTFIX"
+sh create-instance-template.sh "$PREFIX-$SERVICE-image-$POSTFIX"
 echo " "
 
 echo "STEP 3 - Create an instance group"

@@ -342,7 +342,10 @@ In order to use concourse, you must deal with secrets,
 
 * Google service account file
 * Public/private keys for packer to pull github repos
-* Name of google project at gce
+* Name of google project at gce and your email for that project
+
+All of these secrets are passed into the pipeline via concourse fly command
+[here](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci/set-pipeline.sh).
 
 You must also have a docker container that has go, gcloud and packer installed,
 

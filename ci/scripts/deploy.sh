@@ -36,7 +36,7 @@ echo " "
 echo "PRESTEPS"
 echo " "
 
-echo "Note: $GOOGLE_JEFFS_PROJECT_ID env variable already preset"
+echo "Note: $GOOGLE_JEFFS_PROJECT_ID AND $GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS env variable already preset"
 echo " "
 
 echo "Write credential.json file to /root from preset $GOOGLE_APPLICATION_CREDENTIALS_FILE"
@@ -58,8 +58,8 @@ echo "Write public key to /root/.ssh/gce-github-vm.pub"
 echo "$GCE_GITHUB_VM_PUB_FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
 echo " "
 
-echo " gcloud auth login"
-gcloud auth login
+echo " gcloud auth"
+gcloud auth activate-service-account "$GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS" --key-file $GOOGLE_APPLICATION_CREDENTIALS
 echo " "
 
 echo "gcloud config set project $GOOGLE_JEFFS_PROJECT_ID"

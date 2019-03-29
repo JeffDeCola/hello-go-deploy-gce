@@ -17,6 +17,7 @@ jobs:
       params:
         GOOGLE_APPLICATION_CREDENTIALS_FILE: {{google_application_credentials_file}}
         GOOGLE_JEFFS_PROJECT_ID: {{google_jeffs_project_id}}
+        GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS: {{google_service_account_email_address}}
         GCE_GITHUB_VM_FILE: {{gce_github_vm_file}}
         GCE_GITHUB_VM_PUB_FILE: {{gce_github_vm_pub_file}}
       on_success:

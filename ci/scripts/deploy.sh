@@ -33,11 +33,7 @@ echo "At start, you should be in a /tmp/build/xxxxx directory with one folder:"
 echo "   /hello-go-deploy-gce"
 echo " "
 
-echo "STEP 1 - Build a custom image using packer"
-echo "Your boot disk that contains all your stuff (the hello-go-deploy-gce docker image)"
-
-echo "cd hello-go-deploy-gce/deploy-gce/build-image"
-cd hello-go-deploy-gce/deploy-gce/build-image
+echo "PRESTEPS"
 echo " "
 
 echo "Note: $GOOGLE_JEFFS_PROJECT_ID env variable already preset"
@@ -62,10 +58,20 @@ echo "Write public key to /root/.ssh/gce-github-vm.pub"
 echo "$GCE_GITHUB_VM_PUB_FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
 echo " "
 
-echo "ERASE ME TEST - aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-echo "$GOOGLE_JEFFS_PROJECT_ID"
-echo "$GOOGLE_APPLICATION_CREDENTIALS"
-echo "ERASE ME TEST - bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+echo " gcloud auth login"
+gcloud auth login
+echo " "
+
+echo "gcloud config set project $GOOGLE_JEFFS_PROJECT_ID"
+gcloud config set project "$GOOGLE_JEFFS_PROJECT_ID"
+echo " "
+
+echo "STEP 1 - Build a custom image using packer"
+echo "Your boot disk that contains all your stuff (the hello-go-deploy-gce docker image)"
+
+echo "cd hello-go-deploy-gce/deploy-gce/build-image"
+cd hello-go-deploy-gce/deploy-gce/build-image
+echo " "
 
 echo "Kick off build-image.sh"
 sh build-image.sh

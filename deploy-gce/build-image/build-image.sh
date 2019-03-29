@@ -17,11 +17,6 @@ fi
 echo "The goal is to create a custom image on gce using packer."
 echo " "
 
-echo "ERASE ME TEST - ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
-echo "$GOOGLE_JEFFS_PROJECT_ID"
-echo "$GOOGLE_APPLICATION_CREDENTIALS"
-echo "ERASE ME TEST - ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-
 echo "Check for -v switch"
 if [ "$1" = "-v" ]
 then

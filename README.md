@@ -334,6 +334,12 @@ journalctl -f
 
 That's it, you did a lot, have a beer and I hope you had fun.
 
+## A HIGH-LEVEL VIEW OF GCE
+
+Here is an illustration showing how everything fits together,
+
+![IMAGE -  google compute engine app service view instance groups - IMAGE](https://github.com/JeffDeCola/my-cheat-sheets/blob/master/docs/pics/gce-app-service-view-instance-groups.jpg)
+
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 
 For fun, I use concourse to automate the above steps.

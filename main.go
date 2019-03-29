@@ -19,7 +19,7 @@ func main() {
 	var b = 1
 	for {
 		a = addThis(a, b)
-		fmt.Println("Hello everyone, the count is:", a)
+		fmt.Println("Hello all, I finished this!! The count is:", a)
 		time.Sleep(2000 * time.Millisecond)
 	}
 }

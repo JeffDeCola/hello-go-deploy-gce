@@ -81,6 +81,10 @@ echo " "
 echo "STEP 2 - Create an instance template"
 echo "What HW resources you want for your VM instance"
 
+echo "delete any instance-groups or instance templates (-q quiet mode)"
+gcloud compute -q instance-groups managed delete --zone "us-west1-a" "$PREFIX-$SERVICE-instance-group-$POSTFIX"
+gcloud compute -q instance-templates delete "$PREFIX-$SERVICE-instance-template-$POSTFIX"
+
 echo "cd in create-instance-template folder"
 cd ../create-instance-template
 echo " "

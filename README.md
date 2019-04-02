@@ -14,7 +14,7 @@ I also have other repos showing different deployments,
 * [hello-go-deploy-aws](https://github.com/JeffDeCola/hello-go-deploy-aws)
 * [hello-go-deploy-azure](https://github.com/JeffDeCola/hello-go-deploy-azure)
 * [hello-go-deploy-gae](https://github.com/JeffDeCola/hello-go-deploy-gae)
-* hello-go-deploy-gce
+* hello-go-deploy-gce <- You are here!
 * [hello-go-deploy-gke](https://github.com/JeffDeCola/hello-go-deploy-gke)
 * [hello-go-deploy-marathon](https://github.com/JeffDeCola/hello-go-deploy-marathon)
 

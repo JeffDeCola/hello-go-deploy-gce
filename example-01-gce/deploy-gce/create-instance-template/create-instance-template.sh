@@ -11,14 +11,16 @@ fi
 
 if [ "$2" = "-debug" ] || [ "$1" = "-debug" ]
 then
-    echo "create-instance-template.sh -debug (START)"
-    echo " "
+    echo "************************************************************************"
+    echo "* create-instance-template.sh -debug (START) ***************************"
+    echo "************************************************************************"
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -x
     echo " "
 else
-    echo " "
-    echo "create-instance-template.sh (START)"
+    echo "************************************************************************"
+    echo "* create-instance-template.sh (START) **********************************"
+    echo "************************************************************************"
     echo " "
 fi
 
@@ -49,5 +51,7 @@ gcloud compute \
     # --preemptible \
 echo " "
 
-echo "create-instance-template.sh (END)"
+echo "************************************************************************"
+echo "* create-instance-template.sh (END) ************************************"
+echo "************************************************************************"
 echo " "

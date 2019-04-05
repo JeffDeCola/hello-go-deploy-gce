@@ -65,6 +65,10 @@ echo "cp the Dockerfile into /dist"
 cp "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce/build-push/Dockerfile" .
 echo " "
 
+echo "Make it executable by all - chmod +x"
+chmod +x hello-go
+echo " "
+
 echo "List whats in the /dist directory"
 ls -la
 echo " "

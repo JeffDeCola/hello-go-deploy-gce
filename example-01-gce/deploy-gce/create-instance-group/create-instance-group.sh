@@ -10,16 +10,18 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-if [ "$1" = "-debug" ]
+if [ "$2" = "-debug" ] || [ "$1" = "-debug" ]
 then
-    echo "create-instance-group.sh -debug (START)"
-    echo " "
+    echo "************************************************************************"
+    echo "* create-instance-group.sh -debug (START) ******************************"
+    echo "************************************************************************"
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -x
     echo " "
 else
-    echo " "
-    echo "create-instance-group.sh (START)"
+    echo "************************************************************************"
+    echo "* create-instance-group.sh (START) *************************************"
+    echo "************************************************************************"
     echo " "
 fi
 
@@ -43,5 +45,7 @@ gcloud compute \
     --description "Instance Group for Jeffs Repo hello-go-deploy-gce"
 echo ""
 
-echo "create-instance-group.sh (END)"
+echo "************************************************************************"
+echo "* create-instance-group.sh (END) ***************************************"
+echo "************************************************************************"
 echo " "

@@ -70,8 +70,8 @@ echo " "
 echo "STEP 1 - Build a custom image using packer"
 echo "Your boot disk that contains all your stuff (the hello-go-deploy-gce docker image)"
 
-echo "cd hello-go-deploy-gce/deploy-gce/build-image"
-cd hello-go-deploy-gce/deploy-gce/build-image
+echo "cd hello-go-deploy-gce/deploy-gce/example-01-gce/build-image"
+cd hello-go-deploy-gce/deploy-gce/example-01-gce/build-image
 echo " "
 
 echo "Kick off build-image.sh"

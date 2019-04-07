@@ -40,7 +40,7 @@ echo " "
 
 echo "Assuming you are logged in, lets push your built docker image to DockerHub"
 docker push jeffdecola/hello-go-deploy-gce
-echo
+echo " "
 
 echo "************************************************************************"
 echo "* build-push.sh (END) **************************************************"

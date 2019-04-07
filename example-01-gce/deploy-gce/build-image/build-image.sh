@@ -34,7 +34,7 @@ echo " "
 
 echo "packer build command"
 packer $command \
-    -var "account_file=$GCP_JEFFS_SERVICE_ACCOUNT" \
+    -var "account_file=$GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH" \
     -var "project_id=$GCP_JEFFS_PROJECT_ID" \
     gce-packer-template.json
 echo " "

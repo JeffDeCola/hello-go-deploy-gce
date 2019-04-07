@@ -1,1 +1,1 @@
-ok  	github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce	0.004s	coverage: 0.0% of statements
+ok  	github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce	(cached)	coverage: 0.0% of statements

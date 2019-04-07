@@ -58,13 +58,24 @@ echo "Write public key to /root/.ssh/gce-github-vm.pub"
 echo "$GCE_GITHUB_VM_PUB_FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
 echo " "
 
-echo "gcloud auth"
-echo gcloud auth activate-service-account "$GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS" --key-file "$GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH"
+echo "gcloud auth activate-service-account $GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS --key-file $GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH"
 gcloud auth activate-service-account "$GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS" --key-file "$GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH"
 echo " "
 
 echo "gcloud config set project $GCP_JEFFS_PROJECT_ID"
 gcloud config set project "$GCP_JEFFS_PROJECT_ID"
+echo " "
+
+echo "gcloud version"
+gcloud version
+echo " "
+
+echo "gcloud components list"
+gcloud components list
+echo " "
+
+echo "gcloud config list"
+gcloud config list
 echo " "
 
 echo "STEP 1 - Build a custom image using packer"

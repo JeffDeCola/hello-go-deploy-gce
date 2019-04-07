@@ -183,8 +183,8 @@ Run this command,
 
 ```bash
 packer $command \
-    -var "account_file=$GOOGLE_APPLICATION_CREDENTIALS" \
-    -var "project_id=$GOOGLE_JEFFS_PROJECT_ID" \
+    -var "account_file=$GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH" \
+    -var "project_id=$GCP_JEFFS_PROJECT_ID" \
     gce-packer-template.json
 ```
 
@@ -234,7 +234,7 @@ SERVICE="hello-go"
 POSTFIX="date -u +%Y%m%d"
 
 gcloud compute \
-    --project "$GOOGLE_JEFFS_PROJECT_ID" \
+    --project "$GCP_JEFFS_PROJECT_ID" \
      instance-templates create "$PREFIX-$SERVICE-instance-template-$POSTFIX" \
     --machine-type "f1-micro" \
     --network "default" \
@@ -274,7 +274,7 @@ SERVICE="hello-go"
 POSTFIX="date -u +%Y%m%d"
 
 gcloud compute \
-    --project "$GOOGLE_JEFFS_PROJECT_ID" \
+    --project "$GCP_JEFFS_PROJECT_ID" \
     instance-groups managed create "$PREFIX-$SERVICE-instance-group-$POSTFIX" \
     --size "1" \
     --template "$TEMPLATENAME" \
@@ -308,7 +308,7 @@ I'll eventually do this at a later date.
 gcloud compute instance-groups managed set-autoscaling
 ```
 
-This script configures the autopscalling for `the instance groups`
+This script configures the autoscalling for `the instance groups`
 [/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/autoscaling.sh).
 
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)

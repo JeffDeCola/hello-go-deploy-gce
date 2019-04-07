@@ -9,9 +9,9 @@ image_resource:
     tag: latest
 
 params:
-  GOOGLE_APPLICATION_CREDENTIALS_FILE: "this will be overwritten"
-  GOOGLE_JEFFS_PROJECT_ID: "this will be overwritten"
-  GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS: "this will be overwritten"
+  GCP_JEFFS_APP_SERVICE_ACCOUNT_FILE: "this will be overwritten"
+  GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS: "this will be overwritten"
+  GCP_JEFFS_PROJECT_ID: "this will be overwritten"
   GCE_GITHUB_VM_FILE: "this will be overwritten"
   GCE_GITHUB_VM_PUB_FILE: "this will be overwritten"
 

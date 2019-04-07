@@ -116,9 +116,9 @@ jobs:
     - task: task-deploy
       file: hello-go-deploy-gce/ci/tasks/task-deploy.yml
       params:
-        GOOGLE_APPLICATION_CREDENTIALS_FILE: {{google_application_credentials_file}}
-        GOOGLE_JEFFS_PROJECT_ID: {{google_jeffs_project_id}}
-        GOOGLE_SERVICE_ACCOUNT_EMAIL_ADDRESS: {{google_service_account_email_address}}
+        GCP_JEFFS_APP_SERVICE_ACCOUNT_FILE: {{gcp_jeffs_app_service_account_file}}
+        GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS: {{gcp_jeffs_app_service_account_email_address}}
+        GCP_JEFFS_PROJECT_ID: {{gcp_jeffs_project_id}}
         GCE_GITHUB_VM_FILE: {{gce_github_vm_file}}
         GCE_GITHUB_VM_PUB_FILE: {{gce_github_vm_pub_file}}
       on_success:

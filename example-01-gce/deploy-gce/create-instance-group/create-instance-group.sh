@@ -36,7 +36,7 @@ POSTFIX=$(date -u +%Y%m%d)
 
 echo "gcloud compute command"
 gcloud compute \
-    --project "$GOOGLE_JEFFS_PROJECT_ID" \
+    --project "$GCP_JEFFS_PROJECT_ID" \
     instance-groups managed create "$PREFIX-$SERVICE-instance-group-$POSTFIX" \
     --size "1" \
     --template "$TEMPLATENAME" \

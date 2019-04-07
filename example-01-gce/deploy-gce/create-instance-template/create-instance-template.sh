@@ -35,7 +35,7 @@ POSTFIX=$(date -u +%Y%m%d)
 
 echo "gcloud compute command"
 gcloud compute \
-    --project "$GOOGLE_JEFFS_PROJECT_ID" \
+    --project "$GCP_JEFFS_PROJECT_ID" \
      instance-templates create "$PREFIX-$SERVICE-instance-template-$POSTFIX" \
     --machine-type "f1-micro" \
     --network "default" \

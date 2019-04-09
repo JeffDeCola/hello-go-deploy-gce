@@ -11,12 +11,19 @@ a long running "hello-world" Docker Image to Google Compute Engine (gce)._
 
 I also have other repos showing different deployments,
 
-* [hello-go-deploy-aws](https://github.com/JeffDeCola/hello-go-deploy-aws)
-* [hello-go-deploy-azure](https://github.com/JeffDeCola/hello-go-deploy-azure)
-* [hello-go-deploy-gae](https://github.com/JeffDeCola/hello-go-deploy-gae)
-* hello-go-deploy-gce <- You are here!
-* [hello-go-deploy-gke](https://github.com/JeffDeCola/hello-go-deploy-gke)
-* [hello-go-deploy-marathon](https://github.com/JeffDeCola/hello-go-deploy-marathon)
+* PaaS
+  * [hello-go-deploy-aws-lambda](https://github.com/JeffDeCola/hello-go-deploy-aws-lambda)
+  * [hello-go-deploy-azure-functions](https://github.com/JeffDeCola/hello-go-deploy-azure-functions)
+  * [hello-go-deploy-gae](https://github.com/JeffDeCola/hello-go-deploy-gae)
+  * [hello-go-deploy-marathon](https://github.com/JeffDeCola/hello-go-deploy-marathon)
+* CaaS
+  * [hello-go-deploy-amazon-ecs](https://github.com/JeffDeCola/hello-go-deploy-amazon-ecs)
+  * [hello-go-deploy-aks](https://github.com/JeffDeCola/hello-go-deploy-aks)
+  * [hello-go-deploy-gke](https://github.com/JeffDeCola/hello-go-deploy-gke)
+* IaaS
+  * [hello-go-deploy-amazon-ec2](https://github.com/JeffDeCola/hello-go-deploy-amazon-ec2)
+  * [hello-go-deploy-azure-vm](https://github.com/JeffDeCola/hello-go-deploy-azure-vm)
+  * [hello-go-deploy-gce](https://github.com/JeffDeCola/hello-go-deploy-gce)
 
 The `hello-go-deploy-gce`
 [Docker Image](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce)

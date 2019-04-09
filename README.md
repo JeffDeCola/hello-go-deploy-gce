@@ -12,8 +12,8 @@ a long running "hello-world" Docker Image to Google Compute Engine (gce)._
 I also have other repos showing different deployments,
 
 * PaaS
-  * [hello-go-deploy-aws-lambda](https://github.com/JeffDeCola/hello-go-deploy-aws-lambda)
-  * [hello-go-deploy-azure-functions](https://github.com/JeffDeCola/hello-go-deploy-azure-functions)
+  * [hello-go-deploy-aws-elastic-beanstalk](https://github.com/JeffDeCola/hello-go-deploy-aws-elastic-beanstalk)
+  * [hello-go-deploy-azure-app-service](https://github.com/JeffDeCola/hello-go-deploy-azure-app-service)
   * [hello-go-deploy-gae](https://github.com/JeffDeCola/hello-go-deploy-gae)
   * [hello-go-deploy-marathon](https://github.com/JeffDeCola/hello-go-deploy-marathon)
 * CaaS

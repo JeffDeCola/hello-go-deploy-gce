@@ -53,6 +53,9 @@ echo " "
 echo "Check that you are set and everything is in the right place for go:"
 echo "gopath is: $GOPATH"
 echo "pwd is: $PWD"
+go version
+
+echo "ls -la"
 ls -la
 echo " "
 

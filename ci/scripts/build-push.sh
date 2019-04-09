@@ -24,8 +24,10 @@ echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
 echo "   /hello-go-deploy-gce"
 echo "   /dist (created in task-build-push.yml task file)"
 echo " "
+
 echo "pwd is: $PWD"
 echo " "
+
 echo "List whats in the current directory"
 ls -la
 echo " "

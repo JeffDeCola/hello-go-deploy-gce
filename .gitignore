@@ -5,7 +5,7 @@
 **/bin/hello-go
 
 // Ignore test coverage
-**/test/test_converage.txt
+**/test/test_coverage.txt
 
 // Ignore binary used for build
 **/build-push/hello-go

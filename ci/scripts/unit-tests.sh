@@ -46,8 +46,8 @@ echo "cp -R ./hello-go-deploy-gce $GOPATH/src/github.com/JeffDeCola/."
 cp -R "./hello-go-deploy-gce" "$GOPATH/src/github.com/JeffDeCola/."
 echo " "
 
-echo "cd $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce"
-cd "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce"
+echo "cd $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01"
+cd "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01"
 echo " "
 
 echo "Check that you are set and everything is in the right place for go:"

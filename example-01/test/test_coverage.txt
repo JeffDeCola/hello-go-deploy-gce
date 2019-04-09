@@ -1,1 +1,0 @@
-ok  	github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce	0.007s	coverage: 0.0% of statements

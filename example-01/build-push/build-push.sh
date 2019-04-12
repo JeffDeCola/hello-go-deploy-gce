@@ -22,24 +22,34 @@ echo "cd up to code"
 cd ..
 echo " "
 
-echo "Create a binary hello-go in /bin"
-go build -o bin/hello-go main.go
-echo " "
+#echo "Create a binary hello-go in /bin"
+#go build -o bin/hello-go main.go
+#echo " "
 
-echo "Copy the binary in /build-push because docker needs it with Dockerfile"
-cp bin/hello-go build-push/.
-echo " "
+#echo "Copy the binary in /build-push because docker needs it with Dockerfile"
+#cp bin/hello-go build-push/.
+#echo " "
 
-echo "cd build-push"
-cd build-push
-echo " "
+#echo "cd build-push"
+#cd build-push
+#echo " "
 
 echo "Build your docker image from binary /bin/hello-go using /build-push/Dockerfile"
-docker build -t jeffdecola/hello-go-deploy-gce .
+docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-gce .
+echo " "
+
+echo "Image size"
+docker images jeffdecola/hello-go-deploy-gce:latest
 echo " "
 
 echo "Assuming you are logged in, lets push your built docker image to DockerHub"
 docker push jeffdecola/hello-go-deploy-gce
+echo " "
+
+echo "Useful commands:"
+echo "     docker run --name hello-go-deploy-gce -dit jeffdecola/hello-go-deploy-gce"
+echo "     docker exec -i -t hello-go-deploy-gce /bin/bash"
+echo "     docker logs hello-go-deploy-gce"
 echo " "
 
 echo "************************************************************************"

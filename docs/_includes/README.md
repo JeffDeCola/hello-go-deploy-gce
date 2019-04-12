@@ -59,53 +59,46 @@ This script runs the above command
 This script runs the above command in concourse
 [/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/unit-tests.sh).
 
-## STEP 2 - BUILD (DOCKER IMAGE)
+## STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)
 
-Lets build a docker image from your binary `/bin/hello-go`.
-
-First, create a binary `hello-go`,
-I keep my binaries in `/bin`.
+We will be using a multi-stage build using a Dockerfile.
+The end result will be a very small docker image around 13MB.
 
 ```bash
-go build -o bin/hello-go main.go
-```
-
-Copy the binary to `/build-push` because docker needs it in
-same directory as Dockerfile,
-
-```bash
-cp bin/hello-go build-push/.
-cd build-push
-```
-
-Build your docker image from binary `hello-go`
-using `Dockerfile`,
-
-```bash
-docker build -t jeffdecola/hello-go-deploy-gce .
+docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-gce .
 ```
 
 Obviously, replace `jeffdecola` with your DockerHub username.
 
-Check your docker images on your machine,
+In stage 1, rather than copy a binary into a docker image (because
+that can cause issue), the Dockerfile will build the binary in the
+docker image.
+
+If you open the DockerFile you can see it will get the dependencies and
+build the binary in go,
 
 ```bash
-docker images
+FROM golang:alpine AS builder
+RUN go get -d -v
+RUN go build -o /go/bin/hello-go-deploy-gce main.go
 ```
 
-It will be listed as `jeffdecola/hello-go-deploy-gce`
+In stage 2, the Dockerfile will copy the binary created in
+stage 1 and place into a smaller docker base image based
+on `alpine`, which is around 13MB.
 
-You can test your dockerhub image,
+You can check and test your docker image,
 
 ```bash
-docker run jeffdecola/hello-go-deploy-gce
+docker run --name hello-go-deploy-gce -dit jeffdecola/hello-go-deploy-gce
+docker exec -i -t hello-go-deploy-gce /bin/bash
+docker logs hello-go-deploy-gce
+docker images jeffdecola/hello-go-deploy-gce:latest
 ```
 
-This script runs the above commands
-[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/build-push/build-push.sh).
-
-This script runs the above commands in concourse
-[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/build-push.sh).
+There is a `build-push.sh` script to build and push to DockerHub.
+There is also a script in the /ci folder to build and push
+in concourse.
 
 ## STEP 3 - PUSH (TO DOCKERHUB)
 

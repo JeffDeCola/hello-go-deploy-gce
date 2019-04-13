@@ -14,8 +14,8 @@ export GOBIN=$GOPATH/bin
 export PATH=$GOROOT/bin::$GOBIN:$PATH
 echo " "
 
-echo "cd into /root/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce"
-cd /root/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01-gce
+echo "cd into /root/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01"
+cd /root/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01
 echo " "
 
 echo "Build an executable, place in /root/bin"

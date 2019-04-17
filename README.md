@@ -7,7 +7,8 @@
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
 `hello-go-deploy-gce` _will test, build, push (to DockerHub) and deploy
-a long running "hello-world" Docker Image to Google Compute Engine (gce)._
+a long running "hello-world" Docker Image to Google Compute Engine (gce).
+Also, it will enable a service that kicks off the binary at boot._
 
 I also have other repos showing different deployments,
 
@@ -172,8 +173,11 @@ There are three steps to deployment on `gce`,
 * STEP 4.2 - Create an `instance template` - What HW resources you want for your VM instance.
 * STEP 4.3 - Create an `instance group` - Will deploy and scale you VM instance(s).
 
-The end goal is to have your service (the dockerhub image) `hello-go-deploy-gce`
-running on a `gce` VM.
+The end goal is to have the following two services
+running at boot on the VM,
+
+* The dockerhub image `hello-go-deploy-gce`.
+* The binary /bin/hello-go.
 
 ### STEP 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
@@ -195,6 +199,9 @@ were done on the soon to be custom machine image,
 To be able to clone a repo, you will need to create public/private
 (`gce-github-vm` & `gce-github-vm.pub`) ssh keys and put the public
 key at github. Place these keys in your `~/.ssh` folder.
+
+Also note, this image will enable both the docker container and
+a service at boot.
 
 * add-user-jeff.sh - Add jeff as a user.
 * move-welcome-file.sh - Add a welcome file in /home/jeff for fun.

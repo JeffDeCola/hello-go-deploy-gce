@@ -203,17 +203,28 @@ key at github. Place these keys in your `~/.ssh` folder.
 Also note, this image will enable both the docker container and
 a service at boot.
 
-* add-user-jeff.sh - Add jeff as a user.
-* move-welcome-file.sh - Add a welcome file in /home/jeff for fun.
-* setup-github-ssh-keys.sh - Connect to github.
-* upgrade-system.sh - update and upgrade.
-* install-packages.sh - apt-get stuff.
-* install-docker.sh - Install docker.
-* install-go.sh - Install go 1.10.3.
-* pull-private-repos.sh - Get this repo, place in /root/src.
-* install-service.sh - Build the service.
-* enable-service-boot.sh - enable at boot.
-* enable-docker-container-boot.sh - Enable docker container at boot.
+* [add-user-jeff.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/add-user-jeff.sh)
+  Add jeff as a user.
+* [move-welcome-file.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/move-welcome-file.sh)
+  Add a welcome file in /home/jeff for fun.
+* [setup-github-ssh-keys.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/setup-github-ssh-keys.sh)
+  Connect to github.
+* [upgrade-system.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/upgrade-system.sh)
+  update and upgrade.
+* [install-packages.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-packages.sh)
+  apt-get stuff.
+* [install-docker.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-docker.sh)
+  Install docker.
+* [install-go.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-go.sh)
+  Install go 1.10.3.
+* [pull-private-repos.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/[pull-private-repos.sh)
+  Get this repo, place in /root/src.
+* [install-service.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-service.sh)
+  Build the service.
+* [enable-service-boot.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/enable-service-boot.sh)
+  enable at boot.
+* [enable-docker-container-boot.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/enable-docker-container-boot.sh)
+  Enable docker container at boot.
 
 Check on `gce` that the image was created,
 

@@ -170,7 +170,8 @@ There are three steps to deployment on `gce`,
 
 * STEP 4.1 - Build a custom `image` using `packer` -
   Your boot disk that contains all your stuff (the `hello-go-deploy-gce` docker image).
-* STEP 4.2 - Create an `instance template` - What HW resources you want for your VM instance.
+* STEP 4.2 - Create an `instance template` - What HW resources you want for your
+  VM instance.
 * STEP 4.3 - Create an `instance group` - Will deploy and scale you VM instance(s).
 
 The end goal is to have the following two services
@@ -316,7 +317,7 @@ Lastly, this script runs all of the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
 
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
-or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
+or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create)
 instance group.
 
 ### STEP 4.4 AUTOSCALING (OPTIONAL)
@@ -331,7 +332,7 @@ This script configures the autoscalling for `the instance groups`
 [/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/autoscaling.sh).
 
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
-or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
+or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create)
 instance group.
 
 ## CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE

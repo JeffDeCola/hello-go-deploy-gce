@@ -18,7 +18,7 @@ To push a docker image you will need,
 
 To deploy to `gce` you will need,
 
-* [google compute engine (gce)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/compute/google-compute-engine-cheat-sheet)
+* [google compute engine (gce)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet)
 * [packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/packer-cheat-sheet)
 
 As a bonus, you can use Concourse CI to run the scripts,
@@ -54,7 +54,7 @@ go test -cover ./... | tee /test/test_coverage.txt
 ```
 
 This script runs the above command
-[/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/test/unit-tests.sh).
+[/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/test/unit-tests.sh).
 
 This script runs the above command in concourse
 [/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/unit-tests.sh).
@@ -120,7 +120,7 @@ Check you image at DockerHub. My image is located
 [https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce).
 
 This script runs the above commands
-[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/build-push/build-push.sh).
+[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/build-push/build-push.sh).
 
 This script runs the above commands in concourse
 [/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/build-push.sh).
@@ -128,23 +128,27 @@ This script runs the above commands in concourse
 ## STEP 4 - DEPLOY (TO GCE)
 
 Refer to my
-[gce cheat sheet](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine.md)
+[gce cheat sheet](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet)
 for more detailed information and some nice illustrations.
 
 There are three steps to deployment on `gce`,
 
 * STEP 4.1 - Build a custom `image` using `packer` -
   Your boot disk that contains all your stuff (the `hello-go-deploy-gce` docker image).
-* STEP 4.2 - Create an `instance template` - What HW resources you want for your VM instance.
+* STEP 4.2 - Create an `instance template` - What HW resources you want for your
+  VM instance.
 * STEP 4.3 - Create an `instance group` - Will deploy and scale you VM instance(s).
 
-The end goal is to have your service (the dockerhub image) `hello-go-deploy-gce`
-running on a `gce` VM.
+The end goal is to have the following two services
+running at boot on the VM,
+
+* The dockerhub image `hello-go-deploy-gce`.
+* The binary /bin/hello-go.
 
 ### STEP 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
 Packer will be used to create the gce custom machine `image` from the
-[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/gce-packer-template-json).
+[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/build-image/gce-packer-template.json).
 
 Run this command,
 
@@ -162,17 +166,31 @@ To be able to clone a repo, you will need to create public/private
 (`gce-github-vm` & `gce-github-vm.pub`) ssh keys and put the public
 key at github. Place these keys in your `~/.ssh` folder.
 
-* add-user-jeff.sh - Add jeff as a user.
-* move-welcome-file.sh - Add a welcome file in /home/jeff for fun.
-* setup-github-ssh-keys.sh - Connect to github.
-* upgrade-system.sh - update and upgrade.
-* install-packages.sh - apt-get stuff.
-* install-docker.sh - Install docker.
-* install-go.sh - Install go 1.10.3.
-* pull-private-repos.sh - Get this repo, place in /root/src.
-* install-service.sh - Build the service.
-* enable-service-boot.sh - enable at boot.
-* enable-docker-container-boot.sh - Enable docker container at boot.
+Also note, this image will enable both the docker container and
+a service at boot.
+
+* [add-user-jeff.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/add-user-jeff.sh)
+  Add jeff as a user.
+* [move-welcome-file.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/move-welcome-file.sh)
+  Add a welcome file in /home/jeff for fun.
+* [setup-github-ssh-keys.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/setup-github-ssh-keys.sh)
+  Connect to github.
+* [upgrade-system.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/upgrade-system.sh)
+  update and upgrade.
+* [install-packages.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-packages.sh)
+  apt-get stuff.
+* [install-docker.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-docker.sh)
+  Install docker.
+* [install-go.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-go.sh)
+  Install go 1.10.3.
+* [pull-private-repos.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/pull-private-repos.sh)
+  Get this repo, place in /root/src.
+* [install-service.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-service.sh)
+  Build the service.
+* [enable-service-boot.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/enable-service-boot.sh)
+  enable at boot.
+* [enable-docker-container-boot.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/enable-docker-container-boot.sh)
+  Enable docker container at boot.
 
 Check on `gce` that the image was created,
 
@@ -181,11 +199,11 @@ gcloud compute images list --no-standard-images
 ```
 
 Refer to my
-[create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine-create-image-packer.md)
+[create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/blob/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet/google-compute-engine-create-image-packer.md)
 cheat sheet for more detailed information on how to do this.
 
 This script runs the create a custom `image` (using packer) commands.
-[/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/build-image.sh).
+[/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/build-image/build-image.sh).
 
 ### STEP 4.2 CREATE AN INSTANCE TEMPLATE
 
@@ -224,7 +242,7 @@ gcloud compute instance-templates list
 ```
 
 This script runs the create an `instance template` commands.
-[/deploy-gce/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-template/create-instance-template.sh).
+[/deploy-gce/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-template/create-instance-template.sh).
 
 Online docs [here](https://cloud.google.com/sdk/gcloud/reference/compute/instance-templates/create)
 to create instance template.
@@ -258,13 +276,13 @@ gcloud compute instances list
 ```
 
 This script runs the create an `instance group` commands.
-[/deploy-gce/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/create-instance-group.sh).
+[/deploy-gce/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-group/create-instance-group.sh).
 
 Lastly, this script runs all of the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
 
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
-or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
+or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create)
 instance group.
 
 ### STEP 4.4 AUTOSCALING (OPTIONAL)
@@ -276,10 +294,10 @@ gcloud compute instance-groups managed set-autoscaling
 ```
 
 This script configures the autoscalling for `the instance groups`
-[/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/autoscaling.sh).
+[/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-group/autoscaling.sh).
 
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
-or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create]
+or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create)
 instance group.
 
 ## CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE

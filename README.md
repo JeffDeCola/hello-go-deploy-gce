@@ -218,7 +218,7 @@ a service at boot.
   Install docker.
 * [install-go.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-go.sh)
   Install go 1.10.3.
-* [pull-private-repos.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/[pull-private-repos.sh)
+* [pull-private-repos.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/pull-private-repos.sh)
   Get this repo, place in /root/src.
 * [install-service.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-service.sh)
   Build the service.

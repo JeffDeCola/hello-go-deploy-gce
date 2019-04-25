@@ -89,7 +89,7 @@ go test -cover ./... | tee /test/test_coverage.txt
 ```
 
 This script runs the above command
-[/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/test/unit-tests.sh).
+[/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/test/unit-tests.sh).
 
 This script runs the above command in concourse
 [/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/unit-tests.sh).
@@ -155,7 +155,7 @@ Check you image at DockerHub. My image is located
 [https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce).
 
 This script runs the above commands
-[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/build-push/build-push.sh).
+[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/build-push/build-push.sh).
 
 This script runs the above commands in concourse
 [/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/build-push.sh).
@@ -163,7 +163,7 @@ This script runs the above commands in concourse
 ## STEP 4 - DEPLOY (TO GCE)
 
 Refer to my
-[gce cheat sheet](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine.md)
+[gce cheat sheet](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet)
 for more detailed information and some nice illustrations.
 
 There are three steps to deployment on `gce`,
@@ -183,7 +183,7 @@ running at boot on the VM,
 ### STEP 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
 
 Packer will be used to create the gce custom machine `image` from the
-[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/gce-packer-template-json).
+[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/build-image/gce-packer-template.json).
 
 Run this command,
 
@@ -234,11 +234,11 @@ gcloud compute images list --no-standard-images
 ```
 
 Refer to my
-[create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-cloud-platform-cheat-sheet/google-compute-engine-create-image-packer.md)
+[create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/blob/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet/google-compute-engine-create-image-packer.md)
 cheat sheet for more detailed information on how to do this.
 
 This script runs the create a custom `image` (using packer) commands.
-[/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/build-image/build-image.sh).
+[/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/build-image/build-image.sh).
 
 ### STEP 4.2 CREATE AN INSTANCE TEMPLATE
 
@@ -277,7 +277,7 @@ gcloud compute instance-templates list
 ```
 
 This script runs the create an `instance template` commands.
-[/deploy-gce/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-template/create-instance-template.sh).
+[/deploy-gce/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-template/create-instance-template.sh).
 
 Online docs [here](https://cloud.google.com/sdk/gcloud/reference/compute/instance-templates/create)
 to create instance template.
@@ -311,7 +311,7 @@ gcloud compute instances list
 ```
 
 This script runs the create an `instance group` commands.
-[/deploy-gce/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/create-instance-group.sh).
+[/deploy-gce/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-group/create-instance-group.sh).
 
 Lastly, this script runs all of the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
@@ -329,7 +329,7 @@ gcloud compute instance-groups managed set-autoscaling
 ```
 
 This script configures the autoscalling for `the instance groups`
-[/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/deploy-gce/create-instance-group/autoscaling.sh).
+[/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-group/autoscaling.sh).
 
 Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
 or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create)

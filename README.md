@@ -27,6 +27,16 @@ I also have other repos showing different deployments,
   * [hello-go-deploy-azure-vm](https://github.com/JeffDeCola/hello-go-deploy-azure-vm)
   * [hello-go-deploy-gce](https://github.com/JeffDeCola/hello-go-deploy-gce)
 
+* [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#prerequisites)
+* [EXAMPLE 1](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#example-1)
+* [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#step-1---test)
+* [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#step-2---build-docker-image-via-dockerfile)
+* [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#step-3---push-to-dockerhub)
+* [STEP 4 - DEPLOY (TO GCE)](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#step-4---deploy-to-gce)
+* [CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#check-that-hello-go-is-running-on-your-vm-instance)
+* [A HIGH-LEVEL VIEW OF GCE](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#a-high-level-view-of-gce)
+* [TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#test-built-push--deploy-using-concourse-optional)
+
 The `hello-go-deploy-gce`
 [Docker Image](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce)
 on DockerHub.

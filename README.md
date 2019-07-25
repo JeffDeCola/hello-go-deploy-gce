@@ -27,6 +27,8 @@ I also have other repos showing different deployments,
   * [hello-go-deploy-azure-vm](https://github.com/JeffDeCola/hello-go-deploy-azure-vm)
   * [hello-go-deploy-gce](https://github.com/JeffDeCola/hello-go-deploy-gce)
 
+Table of Contents,
+
 * [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#prerequisites)
 * [EXAMPLE 1](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#example-1)
 * [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master#step-1---test)

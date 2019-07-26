@@ -405,7 +405,7 @@ same ssh keys in `/home/jeff/.ssh` when you built the image with packer,
 your VMs can talk to each other using gce's internal DNS.
 
 ```bash
-ssh <USERNAME>@<HOSTNAME>.us-west1-b.c.<PROJECT>.internal
+ssh <USERNAME>@<HOSTNAME>.us-west1-a.c.<PROJECT>.internal
 ```
 
 That's it, you did a lot, have a beer and I hope you had fun.

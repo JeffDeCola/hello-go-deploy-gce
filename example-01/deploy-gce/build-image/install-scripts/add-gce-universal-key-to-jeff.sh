@@ -8,7 +8,7 @@ echo "You are root in /home/packer"
 echo " "
 
 echo "Make /home/jeff/.ssh"
-[ -d /home/jeff/.ssh ] || mkdir / /home/jeff/.ssh
+[ -d /home/jeff/.ssh ] || mkdir /home/jeff/.ssh
 
 echo "mv /tmp/gce-github-vm* /root/.ssh"
 mv /tmp/gce-universal-key-for-all-vms /home/jeff/.ssh/id_rsa
@@ -18,12 +18,15 @@ echo " "
 echo "chmod 600 for both keys"
 chmod 600 /home/jeff/.ssh/id_rsa*
 
+echo "Start ssh agent for root"
+eval $(ssh-agent -s)
+
 echo "Add private key to SSH authentication agent"
 ssh-add /home/jeff/.ssh/id_rsa
 
 echo "Make authorized_keys if it doesn't exist"
 echo "Make /home/jeff/authorized_keys"
-[ -d /home/jeff/.ssh/authorized_keys ] || mkdir /home/jeff/.ssh/authorized_keys
+[ -d /home/jeff/.ssh/authorized_keys ] || touch /home/jeff/.ssh/authorized_keys
 
 echo "chmod 600 for authorized_keys"
 chmod 600 /home/jeff/.ssh/authorized_keys

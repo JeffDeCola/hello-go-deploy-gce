@@ -52,11 +52,22 @@
             "destination": "/tmp/gce-github-vm"
         },
         {
+            "type": "file",
+            "source": "{{user `user_home`}}/.ssh/gce-universal-key-for-all-vms.pub",
+            "destination": "/tmp/gce-universal-key-for-all-vms.pub"
+        },
+        {
+            "type": "file",
+            "source": "{{user `user_home`}}/.ssh/gce-universal-key-for-all-vms",
+            "destination": "/tmp/gce-universal-key-for-all-vms"
+        },        
+        {
             "type": "shell",
             "pause_before": "4s",
             "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E {{ .Path }}",
             "scripts": [
                 "./install-scripts/add-user-jeff.sh",
+                "./install-scripts/add-gce-universal-key-to-jeff.sh",
                 "./install-scripts/move-welcome-file.sh",
                 "./install-scripts/setup-github-ssh-keys.sh",
                 "./install-scripts/upgrade-system.sh",
@@ -66,7 +77,8 @@
                 "./install-scripts/pull-private-repos.sh",
                 "./install-scripts/install-service.sh",
                 "./install-scripts/enable-service-boot.sh",
-                "./install-scripts/enable-docker-container-boot.sh"
+                "./install-scripts/enable-docker-container-boot.sh",
+                "./install-scripts/remove-github-ssh-keys.sh"
             ]
         }
     ]

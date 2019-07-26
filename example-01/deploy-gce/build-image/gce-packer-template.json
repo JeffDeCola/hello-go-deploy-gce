@@ -7,7 +7,7 @@
         "account_file": "",
         "project_id": "",
         "zone": "us-west1-a",
-        "source_image": "ubuntu-1604-xenial-v20190306",
+        "source_image": "ubuntu-1604-xenial-v20190628",
         "image_name": "hello-go",
         "image_description": "GCE custom machine image for Jeffs Repo hello-go-deploy-gce",
         "disk_size": "10",

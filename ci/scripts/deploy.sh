@@ -58,6 +58,14 @@ echo "Write public key to /root/.ssh/gce-github-vm.pub"
 echo "$GCE_GITHUB_VM_PUB_FILE" | base64 -d > "/root/.ssh/gce-github-vm.pub"
 echo " "
 
+echo "Write private key to /root/.ssh/gce-universal-key-for-all-vms"
+echo "$GCE_UNIVERSAL_KEY_FOR_ALL_VMS_FILE" | base64 -d > "/root/.ssh/gce-universal-key-for-all-vms"
+echo " "
+
+echo "Write public key to /root/.ssh/gce-universal-key-for-all-vms.pub"
+echo "$GCE_UNIVERSAL_KEY_FOR_ALL_VMS_PUB_FILE" | base64 -d > "/root/.ssh/gce-universal-key-for-all-vms.pub"
+echo " "
+
 echo "gcloud auth activate-service-account $GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS --key-file $GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH"
 gcloud auth activate-service-account "$GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS" --key-file "$GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH"
 echo " "

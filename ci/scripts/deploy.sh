@@ -85,8 +85,8 @@ echo "cd hello-go-deploy-gce/example-01/deploy-gce/build-image"
 cd hello-go-deploy-gce/example-01/deploy-gce/build-image
 echo " "
 
-echo "Kick off build-image.sh -debug"
-sh build-image.sh -debug
+echo "Kick off build-image.sh"
+sh build-image.sh
 echo " "
 
 echo "STEP 2 - Create an instance template"

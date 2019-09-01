@@ -121,6 +121,8 @@ jobs:
         GCP_JEFFS_PROJECT_ID: {{gcp_jeffs_project_id}}
         GCE_GITHUB_VM_FILE: {{gce_github_vm_file}}
         GCE_GITHUB_VM_PUB_FILE: {{gce_github_vm_pub_file}}
+        GCE_UNIVERSAL_KEY_FOR_ALL_VMS_FILE: {{gce-universal-key-for-all-vms_file}}
+        GCE_UNIVERSAL_KEY_FOR_ALL_VMS_PUB_FILE: {{gce-universal-key-for-all-vms_pub_file}}
       on_success:
         do:
         - put: resource-slack-alert

@@ -14,6 +14,8 @@ params:
   GCP_JEFFS_PROJECT_ID: "this will be overwritten"
   GCE_GITHUB_VM_FILE: "this will be overwritten"
   GCE_GITHUB_VM_PUB_FILE: "this will be overwritten"
+  GCE_UNIVERSAL_KEY_FOR_ALL_VMS_FILE: "this will be overwritten"
+  GCE_UNIVERSAL_KEY_FOR_ALL_VMS_PUB_FILE: "this will be overwritten"
 
 inputs:
 - name: hello-go-deploy-gce

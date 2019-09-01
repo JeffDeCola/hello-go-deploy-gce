@@ -45,6 +45,9 @@ Hello everyone, count is: 3
 etc...
 ```
 
+This script runs the above command
+[run.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/run.sh).
+
 ## STEP 1 - TEST
 
 Lets unit test the code,
@@ -61,7 +64,8 @@ This script runs the above command in concourse
 
 ## STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)
 
-We will be using a multi-stage build using a Dockerfile.
+We will be using a multi-stage build using a
+[Dockerfile](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/build-push/Dockerfile).
 The end result will be a very small docker image around 13MB.
 
 ```bash
@@ -71,7 +75,9 @@ docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-gce .
 Obviously, replace `jeffdecola` with your DockerHub username.
 
 In stage 1, rather than copy a binary into a docker image (because
-that can cause issue), the Dockerfile will build the binary in the
+that can cause issue), the
+Dockerfile
+will build the binary in the
 docker image.
 
 If you open the DockerFile you can see it will get the dependencies and
@@ -83,7 +89,8 @@ RUN go get -d -v
 RUN go build -o /go/bin/hello-go-deploy-gce main.go
 ```
 
-In stage 2, the Dockerfile will copy the binary created in
+In stage 2, the Dockerfile
+will copy the binary created in
 stage 1 and place into a smaller docker base image based
 on `alpine`, which is around 13MB.
 
@@ -96,9 +103,11 @@ docker logs hello-go-deploy-gce
 docker images jeffdecola/hello-go-deploy-gce:latest
 ```
 
-There is a `build-push.sh` script to build and push to DockerHub.
-There is also a script in the /ci folder to build and push
-in concourse.
+This script runs the above commands
+[/build_push/build-push.sh]https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/build-push/build-push.sh).
+
+This script runs the above commands in concourse
+[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/build-push.sh).
 
 ## STEP 3 - PUSH (TO DOCKERHUB)
 
@@ -171,6 +180,8 @@ a service at boot.
 
 * [add-user-jeff.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/add-user-jeff.sh)
   Add jeff as a user.
+* [add-gce-universal-key-to-jeff.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/add-gce-universal-key-to-jeff.sh)
+  Add a universal key to jeff so VMs can ssh into each other using host.
 * [move-welcome-file.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/move-welcome-file.sh)
   Add a welcome file in /home/jeff for fun.
 * [setup-github-ssh-keys.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/setup-github-ssh-keys.sh)
@@ -191,6 +202,8 @@ a service at boot.
   enable at boot.
 * [enable-docker-container-boot.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/enable-docker-container-boot.sh)
   Enable docker container at boot.
+* [remove-github-ssh-keys.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/remove-github-ssh-keys.sh)
+  For security, remove the github keys.
 
 Check on `gce` that the image was created,
 
@@ -304,19 +317,44 @@ instance group.
 
 `ssh` into your VM instance.  This is easy from the gce console.
 
-Check the logs (stdout) of the running docker container.
-Remember, you must be root.
+I actually ssh from my machine since I placed my public keys in gce metadata
+sshkeys, which automatically placed them in the authorized_keys files on my VM.
+Refer
+[here](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet#instances---gce-metadata---startup-scripts)
+on how to do that,
 
 ```bash
-sudo su
-docker ps
-docker logs -f hello-go
+ssh -i ~/.ssh/google_compute_engine jeff@IP
 ```
 
-Check that your service is running,
+Check the logs (stdout) of the running docker container and shell script.
+Remember, you must be root.
+
+Check docker is running,
 
 ```bash
+docker ps
+docker logs -f --tail 10 -f hello-go
+docker stop hello-go
+```
+
+Check that your hello-go.service is running,
+
+```bash
+systemctl list-unit-files | grep hello.go
+sudo systemctl status hello-go
 journalctl -f
+sudo systemctl stop hello-go
+cat /lib/systemd/system/hello-go.service
+# Remember, it kicks off /root/bin/hello-go
+```
+
+Lastly, if you have multiple VMS, and since you put the
+same ssh keys in `/home/jeff/.ssh` when you built the image with packer,
+your VMs can talk to each other using gce's internal DNS.
+
+```bash
+ssh <USERNAME>@<HOSTNAME>.us-west1-a.c.<PROJECT>.internal
 ```
 
 That's it, you did a lot, have a beer and I hope you had fun.

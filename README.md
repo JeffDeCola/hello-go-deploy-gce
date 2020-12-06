@@ -34,7 +34,6 @@ Table of Contents,
 * [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-gce#prerequisites)
 * [RUN](https://github.com/JeffDeCola/hello-go-deploy-gce#run)
 * [CREATE BINARY](https://github.com/JeffDeCola/hello-go-deploy-gce#create-binary)
-* [TEST, BUILD, PUSH & DEPLOY](https://github.com/JeffDeCola/hello-go-deploy-gce#test-build-push--deploy)
 * [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-gce#step-1---test)
 * [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-gce#step-2---build-docker-image-via-dockerfile)
 * [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-gce#step-3---push-to-dockerhub)
@@ -43,6 +42,7 @@ Table of Contents,
   * [STEP 4.2 CREATE AN INSTANCE TEMPLATE](https://github.com/JeffDeCola/hello-go-deploy-gce#step-42-create-an-instance-template)
   * [STEP 4.3 CREATE AN INSTANCE GROUP](https://github.com/JeffDeCola/hello-go-deploy-gce#step-43-create-an-instance-group)
   * [STEP 4.4 AUTOSCALING (OPTIONAL)](https://github.com/JeffDeCola/hello-go-deploy-gce#step-44-autoscaling-optional)
+* [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-gce#continuous-integration--deployment)
 * [CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE](https://github.com/JeffDeCola/hello-go-deploy-gce#check-that-hello-go-is-running-on-your-vm-instance)
 * [A HIGH-LEVEL VIEW OF GCE](https://github.com/JeffDeCola/hello-go-deploy-gce#a-high-level-view-of-gce)
 

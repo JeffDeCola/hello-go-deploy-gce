@@ -20,7 +20,7 @@ COPY . .
 RUN ls -lat $GOPATH/src/github.com/jeffdecola/hello-go-deploy-gce/
 
 # Fetch dependencies using go get
-RUN go get -u -v github.com/sirupsen/logrus
+RUN go get -u github.com/sirupsen/logrus
 RUN go get -d -v
 
 # Build the binary

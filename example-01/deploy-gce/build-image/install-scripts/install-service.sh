@@ -18,6 +18,9 @@ echo "cd into /root/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01"
 cd /root/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01
 echo " "
 
+echo "Install go packages for this build"
+go get -u github.com/sirupsen/logrus
+
 echo "Build an executable, place in /root/bin"
 go build -o /root/bin/hello-go main.go
 echo " "

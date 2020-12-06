@@ -10,3 +10,4 @@ fly -t ci set-pipeline -p hello-go-deploy-gce -c pipeline.yml \
     --var "gce_github_vm_pub_file=$(cat $HOME/.ssh/gce-github-vm.pub | base64)" \
     --var "gce_universal_key_for_all_vms_file=$(cat $HOME/.ssh/gce-universal-key-for-all-vms | base64)" \
     --var "gce_universal_key_for_all_vms_pub_file=$(cat $HOME/.ssh/gce-universal-key-for-all-vms.pub | base64)"
+    

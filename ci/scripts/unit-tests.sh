@@ -72,9 +72,9 @@ echo " "
 echo "GET GO PACKAGES -----------------------------------------------------------------------"
 echo " "
 
-# echo "go get -u periph.io/x/periph/cmd/..."
-# go get -u periph.io/x/periph/cmd/...
-# echo " "
+echo "go get -u -v github.com/sirupsen/logrus"
+go get -u -v github.com/sirupsen/logrus
+echo " "
 
 echo "RUN TESTS -----------------------------------------------------------------------------"
 echo " "

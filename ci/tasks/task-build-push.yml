@@ -6,7 +6,7 @@ image_resource:
   type: docker-image
   source:
     repository: golang
-    tag: 1.7.1
+    tag: 1.15.3
 
 inputs:
 - name: hello-go-deploy-gce
@@ -15,5 +15,6 @@ outputs:
 - name: dist
 
 run:
+
   path: ./hello-go-deploy-gce/ci/scripts/build-push.sh
   # args: [-debug]

@@ -17,8 +17,15 @@ else
     echo " "
 fi
 
+echo "GOAL ----------------------------------------------------------------------------------"
+echo " "
+
 echo "The concourse pipeline will build and push the docker image to DockerHub via a DockerFile"
 echo " "
+
+echo "CHECK THINGS --------------------------------------------------------------------------"
+echo " "
+
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
 echo "   /hello-go-deploy-gce"
 echo "   /dist (created in task-build-push.yml task file)"
@@ -31,11 +38,16 @@ echo "List whats in the current directory"
 ls -la
 echo " "
 
+echo "SETUP THE BUILD IN /dist --------------------------------------------------------------"
+echo " "
+
 echo "Copy what you want to make binary of (i.e. go build) into dist"
+echo "cp -r hello-go-deploy-gce/example-01/* dist"
 cp -r hello-go-deploy-gce/example-01/* dist
 echo " "
 
 echo "Copy the Dockefile into dist"
+echo "cp dist/build-push/Dockerfile dist"
 cp dist/build-push/Dockerfile dist
 
 echo "List whats in /dist"
@@ -85,6 +97,9 @@ echo " "
 #echo "List whats in the /dist directory"
 #ls -la
 #echo " "
+
+echo "BUILD AND PUSH DONE IN PIPELINE -------------------------------------------------------"
+echo " "
 
 echo "The concourse pipeline will build and push the docker image to DockerHub"
 echo "Its funny because you are in a docker image (on concourse) that will build a docker image"

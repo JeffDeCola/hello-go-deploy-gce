@@ -1,5 +1,5 @@
 #!/bin/sh
-# hello-go-deploy-gce unit-test.sh
+# hello-go-deploy-gce unit-tests.sh
 
 echo " "
 
@@ -17,9 +17,15 @@ else
     echo " "
 fi
 
+echo "GOAL ----------------------------------------------------------------------------------"
+echo " "
+
 echo "The goal is to set up a go src/github.com/JeffDeCola/hello-go-deploy-gce directory"
 echo "Then tests will be run in that directory"
 echo "Test coverage results, text_coverage.txt, will be moved to /coverage-results directory"
+echo " "
+
+echo "CHECK THINGS --------------------------------------------------------------------------"
 echo " "
 
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
@@ -30,24 +36,28 @@ echo " "
 echo "pwd is: $PWD"
 echo " "
 
-echo "export START_DIRECTORY=$PWD"
-export START_DIRECTORY="$PWD"
-echo " "
-
 echo "List whats in the current directory"
 ls -la
 echo " "
 
-echo "mkdir -p $GOPATH/src/github.com/JeffDeCola/"
-mkdir -p "$GOPATH/src/github.com/JeffDeCola/"
+echo "SETUP GO ------------------------------------------------------------------------------"
 echo " "
 
-echo "cp -R ./hello-go-deploy-gce $GOPATH/src/github.com/JeffDeCola/."
-cp -R "./hello-go-deploy-gce" "$GOPATH/src/github.com/JeffDeCola/."
+echo "Setup the GOPATH based on current directory"
+echo "export GOPATH=\$PWD"
+export GOPATH=$PWD
 echo " "
 
-echo "cd $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01"
-cd "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce/example-01"
+echo "Now we must move our code from the current directory ./hello-go-deploy-gce to" 
+echo "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-gce"
+echo "mkdir -p src/github.com/JeffDeCola/"
+mkdir -p src/github.com/JeffDeCola/
+echo "cp -R ./hello-go-deploy-gce src/github.com/JeffDeCola/."
+cp -R ./hello-go-deploy-gce src/github.com/JeffDeCola/.
+echo " "
+
+echo "cd src/github.com/JeffDeCola/hello-go-deploy-gce/example-01"
+cd src/github.com/JeffDeCola/hello-go-deploy-gce/example-01
 echo " "
 
 echo "Check that you are set and everything is in the right place for go:"
@@ -59,21 +69,43 @@ echo "ls -la"
 ls -la
 echo " "
 
-echo "Run go test -cover"
+echo "GET GO PACKAGES -----------------------------------------------------------------------"
+echo " "
+
+# echo "go get -u periph.io/x/periph/cmd/..."
+# go get -u periph.io/x/periph/cmd/...
+# echo " "
+
+echo "RUN TESTS -----------------------------------------------------------------------------"
+echo " "
+
+echo "Run go tests"
+echo "go test -cover ./... | tee test/test_coverage.txt"
 echo "   -cover shows the percentage coverage"
 echo "   Put results in /test/test_coverage.txt file"
 go test -cover ./... | tee test/test_coverage.txt
-echo " "
+
+# echo "TEST PLACEHOLDER -----------------------------------------------------------------------"
+# echo " "
+
+# echo "mkdir -p test"
+# mkdir -p test
+# echo "Placeholder to run go tests for hello-go-deploy-gce" | tee test/test_coverage.txt
+# echo " "
 
 echo "Clean test_coverage.txt file - add some whitespace to the begining of each line"
+echo "sed -i -e 's/^/     /' test/test_coverage.txt"
 sed -i -e 's/^/     /' test/test_coverage.txt
+echo " "
+
+echo "MOVE TEST COVERAGE FILE ---------------------------------------------------------------"
 echo " "
 
 echo "The test_coverage.txt file will be used by the concourse pipeline to send to slack"
 echo " "
 
 echo "Move text_coverage.txt to /coverage-results directory"
-mv "test/test_coverage.txt" "$START_DIRECTORY/coverage-results/"
+mv "test/test_coverage.txt" "$GOPATH/coverage-results/"
 echo " "
 
 echo "unit-tests.sh (END)"

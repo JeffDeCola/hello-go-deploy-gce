@@ -1,39 +1,29 @@
 #!/bin/sh -e
-# hello-go-deploy-gce example-01 unit-tests.sh
+# hello-go-deploy-gce example-01 create-binary.sh
 
 echo " "
 
 if [ "$1" = "-debug" ]
 then
     echo "************************************************************************"
-    echo "* unit-tests.sh -debug (START) *****************************************"
+    echo "* create-binary.sh -debug (START) **************************************"
     echo "************************************************************************"
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -x
     echo " "
 else
     echo "************************************************************************"
-    echo "* unit-tests.sh (START) ************************************************"
+    echo "* create-binary.sh (START) *********************************************"
     echo "************************************************************************"
     echo " "
 fi
 
-echo "If you need to generate _test files run"
-echo "   gotests -w -all main.go"
-echo " "
-
-echo "cd up to code level"
-cd ..
-echo " "
-
-echo "go test -cover"
-echo "   -cover shows the percentage coverage"
-echo "   Put results in /test/test_coverage.txt file"
-echo " "
-go test -cover ./... | tee test/test_coverage.txt
+echo "Create a binary hello-go in /bin"
+echo "    Kick off executable with ./hello-go"
+go build -o hello-go ../main.go
 echo " "
 
 echo "************************************************************************"
-echo "* unit-tests.sh (END) **************************************************"
+echo "* create-binary.sh (END) ***********************************************"
 echo "************************************************************************"
 echo " "

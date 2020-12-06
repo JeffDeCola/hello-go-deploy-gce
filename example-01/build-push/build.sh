@@ -1,49 +1,36 @@
 #!/bin/sh -e
-# hello-go-deploy-gce build-push.sh
+# hello-go-deploy-gce example-01 build.sh
 
 echo " "
 
 if [ "$1" = "-debug" ]
 then
     echo "************************************************************************"
-    echo "* build-push.sh -debug (START) *****************************************"
+    echo "* build.sh -debug (START) **********************************************"
     echo "************************************************************************"
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -x
     echo " "
 else
     echo "************************************************************************"
-    echo "* build-push.sh (START) ************************************************"
+    echo "* build.sh (START) *****************************************************"
     echo "************************************************************************"
     echo " "
 fi
 
-echo "cd up to code"
+echo "cd to where go code is"
+echo "cd .."
 cd ..
-echo " "
 
-#echo "Create a binary hello-go in /bin"
-#go build -o bin/hello-go main.go
-#echo " "
-
-#echo "Copy the binary in /build-push because docker needs it with Dockerfile"
-#cp bin/hello-go build-push/.
-#echo " "
-
-#echo "cd build-push"
-#cd build-push
-#echo " "
-
-echo "Build your docker image from binary /bin/hello-go using /build-push/Dockerfile"
+echo "Build your docker image using Dockerfile"
+echo "NOTE: The binary is built using this step"
+echo "docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-gce ."
 docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-gce .
 echo " "
 
-echo "Image size"
+echo "Check Docker Image size"
+echo "docker images jeffdecola/hello-go-deploy-gce:latest"
 docker images jeffdecola/hello-go-deploy-gce:latest
-echo " "
-
-echo "Assuming you are logged in, lets push your built docker image to DockerHub"
-docker push jeffdecola/hello-go-deploy-gce
 echo " "
 
 echo "Useful commands:"
@@ -53,6 +40,6 @@ echo "     docker logs hello-go-deploy-gce"
 echo " "
 
 echo "************************************************************************"
-echo "* build-push.sh (END) **************************************************"
+echo "* build.sh (END) *******************************************************"
 echo "************************************************************************"
 echo " "

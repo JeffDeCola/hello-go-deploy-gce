@@ -168,10 +168,8 @@ docker exec -i -t hello-go-deploy-gce /bin/bash
 docker logs hello-go-deploy-gce
 ```
 
-### Stage 1
-
-In stage 1, rather than copy a binary into a docker image (because
-that can cause issue), **the Dockerfile will build the binary in the
+In **stage 1**, rather than copy a binary into a docker image (because
+that can cause issues), **the Dockerfile will build the binary in the
 docker image.**
 
 If you open the DockerFile you can see it will get the dependencies and
@@ -183,9 +181,7 @@ RUN go get -d -v
 RUN go build -o /go/bin/hello-go-deploy-gce main.go
 ```
 
-### Stage 2
-
-In stage 2, the Dockerfile will copy the binary created in
+In **stage 2**, the Dockerfile will copy the binary created in
 stage 1 and place into a smaller docker base image based
 on `alpine`, which is around 13MB.
 

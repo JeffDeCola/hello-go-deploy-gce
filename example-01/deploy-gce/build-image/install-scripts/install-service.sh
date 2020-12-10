@@ -20,6 +20,7 @@ echo " "
 
 echo "Install go packages for this build"
 go get -u github.com/sirupsen/logrus
+echo " "
 
 echo "Build an executable, place in /root/bin"
 go build -o /root/bin/hello-go main.go

@@ -1,16 +1,18 @@
-# hello-go-deploy-gce
+# HELLO GO DEPLOY GCE
 
+[![Tag Latest](https://img.shields.io/github/v/tag/jeffdecola/hello-go-deploy-gce)](https://github.com/JeffDeCola/hello-go-deploy-gce/tags)
+[![Go Reference](https://pkg.go.dev/badge/github.com/JeffDeCola/hello-go-deploy-gce.svg)](https://pkg.go.dev/github.com/JeffDeCola/hello-go-deploy-gce)
 [![Go Report Card](https://goreportcard.com/badge/github.com/JeffDeCola/hello-go-deploy-gce)](https://goreportcard.com/report/github.com/JeffDeCola/hello-go-deploy-gce)
-[![GoDoc](https://godoc.org/github.com/JeffDeCola/hello-go-deploy-gce?status.svg)](https://godoc.org/github.com/JeffDeCola/hello-go-deploy-gce)
-[![Maintainability](https://api.codeclimate.com/v1/badges/1dff96727b972dd4cda4/maintainability)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/maintainability)
-[![Issue Count](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/issues)
-[![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
+[![codeclimate Maintainability](https://api.codeclimate.com/v1/badges/1dff96727b972dd4cda4/maintainability)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/maintainability)
+[![codeclimate Issue Count](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-gce/issues)
+[![Docker Pulls](https://badgen.net/docker/pulls/jeffdecola/hello-go-deploy-gce?icon=docker&label=pulls)](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce/)
+[![MIT License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
+[![jeffdecola.com](https://img.shields.io/badge/website-jeffdecola.com-blue)](https://jeffdecola.com)
 
-`hello-go-deploy-gce` _will test, build, push (to DockerHub) and deploy
-a long running "hello-world" Docker Image to Google Compute Engine (gce).
-Also, it will enable a hello-go.service that kicks off the binary hello-go at boot._
+_Deploy a "hello-world" docker image to
+Google Compute Engine (gce).
 
-I also have other repos showing different deployments,
+Other Services
 
 * PaaS
   * [hello-go-deploy-aws-elastic-beanstalk](https://github.com/JeffDeCola/hello-go-deploy-aws-elastic-beanstalk)
@@ -28,7 +30,7 @@ I also have other repos showing different deployments,
   * [hello-go-deploy-gce](https://github.com/JeffDeCola/hello-go-deploy-gce)
     **(You are here)**
 
-Table of Contents,
+Table of Contents
 
 * [OVERVIEW](https://github.com/JeffDeCola/hello-go-deploy-gce#overview)
 * [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-gce#prerequisites)
@@ -46,15 +48,15 @@ Table of Contents,
 * [CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE](https://github.com/JeffDeCola/hello-go-deploy-gce#check-that-hello-go-is-running-on-your-vm-instance)
 * [A HIGH-LEVEL VIEW OF GCE](https://github.com/JeffDeCola/hello-go-deploy-gce#a-high-level-view-of-gce)
 
-Documentation and references,
+Documentation and Reference
 
 * The
-  [hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce)
-  docker image on DockerHub
-
-[GitHub Webpage](https://jeffdecola.github.io/hello-go-deploy-gce/)
-_built with
-[concourse ci](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci-README.md)_
+  [hello-go-deploy-gce docker image](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce)
+  on DockerHub
+* This repos
+  [github webpage](https://jeffdecola.github.io/hello-go-deploy-gce/)
+  _built with
+  [concourse](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci-README.md)_
 
 ## OVERVIEW
 

@@ -1,3 +1,0 @@
-The README.md intentionally not in this folder.
-
-Concourse ci will update the README.md on the master branch.

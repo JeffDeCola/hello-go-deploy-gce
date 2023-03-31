@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# hello-go-deploy-gce run.sh
+# hello-go-deploy-aks run.sh
 
 echo " "
 
@@ -8,7 +8,8 @@ then
     echo "************************************************************************"
     echo "* run.sh -debug (START) ************************************************"
     echo "************************************************************************"
-    # set -x enables a mode of the shell where all executed commands are printed to the terminal.
+    # set -x enables a mode of the shell where all executed commands
+    # are printed to the terminal.
     set -x
     echo " "
 else

@@ -1,13 +1,12 @@
-#!/bin/bash
-# hello-go-deploy-gce set-pipeline.sh
+#!/bin/sh
+# hello-go-deploy-aks set-pipeline.sh
 
-fly -t ci set-pipeline -p hello-go-deploy-gce -c pipeline.yml \
-    --load-vars-from ../../../../../.credentials.yml \
-    --var "gcp_jeffs_app_service_account_file=$(cat $GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH | base64)" \
-    --var "gcp_jeffs_app_service_account_email_address=$GCP_JEFFS_APP_SERVICE_ACCOUNT_EMAIL_ADDRESS" \
-    --var "gcp_jeffs_project_id=$GCP_JEFFS_PROJECT_ID" \
-    --var "gce_github_vm_file=$(cat $HOME/.ssh/gce-github-vm | base64)" \
-    --var "gce_github_vm_pub_file=$(cat $HOME/.ssh/gce-github-vm.pub | base64)" \
-    --var "gce_universal_key_for_all_vms_file=$(cat $HOME/.ssh/gce-universal-key-for-all-vms | base64)" \
-    --var "gce_universal_key_for_all_vms_pub_file=$(cat $HOME/.ssh/gce-universal-key-for-all-vms.pub | base64)"
-    
+echo " "
+echo "Set pipeline on target jeffs-ci-target which is team jeffs-ci-team"
+fly --target jeffs-ci-target \
+    set-pipeline \
+    --pipeline hello-go-deploy-aks \
+    --config pipeline.yml \
+    --load-vars-from ../../../.credentials.yml \
+    --check-creds
+echo " "

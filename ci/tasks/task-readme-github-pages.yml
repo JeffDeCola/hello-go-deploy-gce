@@ -1,19 +1,20 @@
-# hello-go-deploy-gce task-readme-github-pages.yml
+# hello-go-deploy-aks task-readme-github-pages.yml
 
 platform: linux
 
+# DOCKER BASE IMAGE FOR TASKS (BASED ON ALPINE, A SMALLER LINUX DISTRIBUTION)
 image_resource:
   type: docker-image
   source:
     repository: golang
-    tag: 1.15.3
+    tag: 1.20.1
 
 inputs:
-- name: hello-go-deploy-gce
+  - name: hello-go-deploy-aks
 
 outputs:
-- name: hello-go-deploy-gce-updated
+  - name: hello-go-deploy-aks-updated
 
 run:
-  path: ./hello-go-deploy-gce/ci/scripts/readme-github-pages.sh
+  path: ./hello-go-deploy-aks/ci/scripts/readme-github-pages.sh
   # args: [-debug]

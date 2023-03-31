@@ -1,29 +1,9 @@
-_built with
-[concourse ci](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci-README.md)_
 
-# OVERVIEW
+# PREREQUISITES
 
-Every 2 seconds it will print,
-
-```txt
-    INFO[0000] Let's Start this!
-    Hello everyone, count is: 1
-    Hello everyone, count is: 2
-    Hello everyone, count is: 3
-    etc...
-```
-
-## PREREQUISITES
-
-I used the following language,
+For this exercise I used go.  Feel free to use a language of your choice,
 
 * [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet)
-
-You will need the following go packages,
-
-```bash
-go get -u -v github.com/sirupsen/logrus
-```
 
 To build a docker image you will need docker on your machine,
 
@@ -33,89 +13,62 @@ To push a docker image you will need,
 
 * [DockerHub account](https://hub.docker.com/)
 
-To deploy to `gce` you will need,
+To deploy `aks` you will need,
 
-* [google compute engine (gce)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet)
-* [packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/packer-cheat-sheet)
+* [microsoft azure kubernetes service (aks)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/containers-as-a-service/microsoft-azure-kubernetes-service-cheat-sheet)
 
-As a bonus, you can use Concourse CI,
+As a bonus, you can use Concourse CI to run the scripts,
 
 * [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet)
+  (Optional)
 
-## RUN
+## EXAMPLES
 
-The following steps are located in
-[run.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/run.sh).
+This repo may have a few examples. We will deploy example 1.
 
-To run
-[main.go](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/main.go)
-from the command line,
+### EXAMPLE 1
+
+To run from the command line,
 
 ```bash
-cd example-01
 go run main.go
 ```
 
-## CREATE BINARY
-
-The following steps are located in
-[create-binary.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/bin/create-binary.sh).
+Every 2 seconds `hello-go-deploy-aks` will print:
 
 ```bash
-cd example-01
-go build -o bin/hello-go main.go
-cd bin
-./hello-go
+Hello everyone, count is: 1
+Hello everyone, count is: 2
+Hello everyone, count is: 3
+etc...
 ```
-
-This binary will not be used during a docker build
-since it creates it's own.
 
 ## STEP 1 - TEST
 
-The following steps are located in
-[unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/test/unit-tests.sh).
-
-To unit test the code,
+Lets unit test the code,
 
 ```bash
-cd example-01
-go test -cover ./... | tee test/test_coverage.txt
-cat test/test_coverage.txt
+go test -cover ./... | tee /test/test_coverage.txt
 ```
 
-To create `_test` files,
-
-```bash
-gotests -w -all main.go
-```
+There is a `unit-tests.sh` script to run the unit tests.
+There is also a script in the /ci folder to run the unit tests
+in concourse.
 
 ## STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)
 
-The following steps are located in
-[build.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/build-push/build.sh).
-
-We will be using a multi-stage build using a
-[Dockerfile](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/build-push/Dockerfile).
+We will be using a multi-stage build using a Dockerfile.
 The end result will be a very small docker image around 13MB.
 
 ```bash
-cd example-01
-docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-gce .
+docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-aks .
 ```
 
-You can check and test this docker image,
+Obviously, replace `jeffdecola` with your DockerHub username.
 
-```bash
-docker images jeffdecola/hello-go-deploy-gce:latest
-docker run --name hello-go-deploy-gce -dit jeffdecola/hello-go-deploy-gce
-docker exec -i -t hello-go-deploy-gce /bin/bash
-docker logs hello-go-deploy-gce
-```
-
-In **stage 1**, rather than copy a binary into a docker image (because
-that can cause issues), **the Dockerfile will build the binary in the
-docker image.**
+In stage 1, rather than copy a binary into a docker image (because
+that can cause issue), the Dockerfile will build the binary in the
+docker image.
 
 If you open the DockerFile you can see it will get the dependencies and
 build the binary in go,
@@ -123,17 +76,29 @@ build the binary in go,
 ```bash
 FROM golang:alpine AS builder
 RUN go get -d -v
-RUN go build -o /go/bin/hello-go-deploy-gce main.go
+RUN go build -o /go/bin/hello-go-deploy-aks main.go
 ```
 
-In **stage 2**, the Dockerfile will copy the binary created in
+In stage 2, the Dockerfile will copy the binary created in
 stage 1 and place into a smaller docker base image based
 on `alpine`, which is around 13MB.
 
+You can check and test your docker image,
+
+```bash
+docker run --name hello-go-deploy-aks -dit jeffdecola/hello-go-deploy-aks
+docker exec -i -t hello-go-deploy-aks /bin/bash
+docker logs hello-go-deploy-aks
+docker images jeffdecola/hello-go-deploy-aks:latest
+```
+
+There is a `build-push.sh` script to build and push to DockerHub.
+There is also a script in the /ci folder to build and push
+in concourse.
+
 ## STEP 3 - PUSH (TO DOCKERHUB)
 
-The following steps are located in
-[push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/build-push/push.sh).
+Lets push your docker image to DockerHub.
 
 If you are not logged in, you need to login to dockerhub,
 
@@ -141,249 +106,60 @@ If you are not logged in, you need to login to dockerhub,
 docker login
 ```
 
-Once logged in you can push to DockerHub,
+Once logged in you can push to DockerHub
 
 ```bash
-docker push jeffdecola/hello-go-deploy-gce
+docker push jeffdecola/hello-go-deploy-aks
 ```
 
-Check the
-[hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce)
-docker image at DockerHub.
+Check you image at DockerHub. My image is located
+[https://hub.docker.com/r/jeffdecola/hello-go-deploy-aks](https://hub.docker.com/r/jeffdecola/hello-go-deploy-aks).
 
-## STEP 4 - DEPLOY (TO GCE)
+There is a `build-push.sh` script to build and push to DockerHub.
+There is also a script in the /ci folder to build and push
+in concourse.
 
-Refer to my
-[gce cheat sheet](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet)
-for more detailed information and some nice illustrations.
+## STEP 4 - DEPLOY
 
-There are three steps to deployment on `gce`,
+tbd
 
-* STEP 4.1 - Build a custom `image` using `packer` -
-  Your boot disk that contains all your stuff (the `hello-go-deploy-gce` docker image).
-* STEP 4.2 - Create an `instance template` - What HW resources you want for your
-  VM instance.
-* STEP 4.3 - Create an `instance group` - Will deploy and scale you VM instance(s).
+## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 
-The end goal is to have the following two services
-running at boot on the VM,
+For fun, I use concourse to automate the above steps.
 
-* The dockerhub image `hello-go-deploy-gce`.
-* The binary /bin/hello-go.
+A pipeline file [pipeline.yml](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/pipeline.yml)
+shows the entire ci flow. Visually, it looks like,
 
-### STEP 4.1 CREATE A CUSTOM MACHINE IMAGE (USING PACKER)
+![IMAGE - hello-go-deploy-aks concourse ci pipeline - IMAGE](pics/hello-go-deploy-aks-pipeline.jpg)
 
-Packer will be used to create the gce custom machine `image` from the
-[packer template file](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/build-image/gce-packer-template.json).
+The `jobs` and `tasks` are,
 
-Run this command,
+* `job-readme-github-pages` runs task
+  [readme-github-pages.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/scripts/readme-github-pages.sh).
+* `job-unit-tests` runs task
+  [unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/scripts/unit-tests.sh).
+* `job-build-push` runs task
+  [build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/scripts/build-push.sh).
+* `job-deploy` runs task
+  [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/scripts/deploy.sh).
 
-```bash
-packer $command \
-    -var "account_file=$GCP_JEFFS_APP_SERVICE_ACCOUNT_PATH" \
-    -var "project_id=$GCP_JEFFS_PROJECT_ID" \
-    gce-packer-template.json
-```
+The concourse `resources type` are,
 
-Inside the packer template file the following configurations and provisions
-were done on the soon to be custom machine image,
+* `hello-go-deploy-aks` uses a resource type
+  [docker-image](https://hub.docker.com/r/concourse/git-resource/)
+  to PULL a repo from github.
+* `resource-dump-to-dockerhub` uses a resource type
+  [docker-image](https://hub.docker.com/r/concourse/docker-image-resource/)
+  to PUSH a docker image to dockerhub.
+* `resource-marathon` users a resource type
+  [docker-image](https://hub.docker.com/r/ckaznocha/marathon-resource)
+  to DEPLOY the newly created docker image to marathon.
+* `resource-slack-alert` uses a resource type
+  [docker image](https://hub.docker.com/r/cfcommunity/slack-notification-resource)
+  that will notify slack on your progress.
+* `resource-repo-status` uses a resource type
+  [docker image](https://hub.docker.com/r/dpb587/github-status-resource)
+  that will update your git status for that particular commit.
 
-To be able to clone a repo, you will need to create public/private
-(`gce-github-vm` & `gce-github-vm.pub`) ssh keys and put the public
-key at github. Place these keys in your `~/.ssh` folder.
-
-Also note, this image will enable both the docker container and
-a service at boot.
-
-* [add-user-jeff.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/add-user-jeff.sh)
-  Add jeff as a user.
-* [add-gce-universal-key-to-jeff.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/add-gce-universal-key-to-jeff.sh)
-  Add a universal key to jeff so VMs can ssh into each other using host.
-* [move-welcome-file.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/move-welcome-file.sh)
-  Add a welcome file in /home/jeff for fun.
-* [setup-github-ssh-keys.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/setup-github-ssh-keys.sh)
-  Connect to github.
-* [upgrade-system.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/upgrade-system.sh)
-  update and upgrade.
-* [install-packages.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-packages.sh)
-  apt-get stuff.
-* [install-docker.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-docker.sh)
-  Install docker.
-* [install-go.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-go.sh)
-  Install go 1.15.3.
-* [pull-private-repos.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/pull-private-repos.sh)
-  Get this repo, place in /root/src.
-* [install-service.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/install-service.sh)
-  Build the service.
-* [enable-service-boot.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/enable-service-boot.sh)
-  enable at boot.
-* [enable-docker-container-boot.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/enable-docker-container-boot.sh)
-  Enable docker container at boot.
-* [remove-github-ssh-keys.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/example-01/deploy-gce/build-image/install-scripts/remove-github-ssh-keys.sh)
-  For security, remove the github keys.
-
-Check on `gce` that the image was created,
-
-```bash
-gcloud compute images list --no-standard-images
-```
-
-Refer to my
-[create a custom image using packer](https://github.com/JeffDeCola/my-cheat-sheets/blob/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet/google-compute-engine-create-image-packer.md)
-cheat sheet for more detailed information on how to do this.
-
-This script runs the create a custom `image` (using packer) commands.
-[/deploy-gce/build-image/build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/build-image/build-image.sh).
-
-### STEP 4.2 CREATE AN INSTANCE TEMPLATE
-
-The `instance template` contains the HW resources the `instance group`
-needs to create the VM instance.
-
-Run the following to create the instance template,
-
-```bash
-IMAGENAME="$1"
-PREFIX="jeff"
-SERVICE="hello-go"
-POSTFIX="date -u +%Y%m%d"
-
-gcloud compute \
-    --project "$GCP_JEFFS_PROJECT_ID" \
-     instance-templates create "$PREFIX-$SERVICE-instance-template-$POSTFIX" \
-    --machine-type "f1-micro" \
-    --network "default" \
-    --maintenance-policy "TERMINATE" \
-    --tags "jeff-test" \
-    --image "$IMAGENAME" \
-    --boot-disk-size "10" \
-    --boot-disk-type "pd-standard" \
-    --boot-disk-device-name "$PREFIX-$SERVICE-disk-$POSTFIX" \
-    --description "hello-go from Jeffs Repo hello-go-deploy-gce" \
-    --region "us-west1"
-    # --service-account=SERVICE_ACCOUNT
-    # --preemptible \
-```
-
-Check on `gce` that the instance template was created,
-
-```bash
-gcloud compute instance-templates list
-```
-
-This script runs the create an `instance template` commands.
-[/deploy-gce/create-instance-template/create-instance-template.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-template/create-instance-template.sh).
-
-Online docs [here](https://cloud.google.com/sdk/gcloud/reference/compute/instance-templates/create)
-to create instance template.
-
-### STEP 4.3 CREATE AN INSTANCE GROUP
-
-The instance group controls the show. It launches your VM instance
-and scales your VM instances as needed.
-
-```bash
-TEMPLATENAME="$1"
-PREFIX="jeff"
-SERVICE="hello-go"
-POSTFIX="date -u +%Y%m%d"
-
-gcloud compute \
-    --project "$GCP_JEFFS_PROJECT_ID" \
-    instance-groups managed create "$PREFIX-$SERVICE-instance-group-$POSTFIX" \
-    --size "1" \
-    --template "$TEMPLATENAME" \
-    --base-instance-name "$PREFIX-$SERVICE-instance-$POSTFIX" \
-    --zone "us-west1-a" \
-    --description "hello-go from Jeffs Repo hello-go-deploy-gce"
-```
-
-Check on `gce` that the `instance group` and VM `instance` was created,
-
-```bash
-gcloud compute instance-groups list
-gcloud compute instances list
-```
-
-This script runs the create an `instance group` commands.
-[/deploy-gce/create-instance-group/create-instance-group.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-group/create-instance-group.sh).
-
-Lastly, this script runs all of the above commands in concourse
-[/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh).
-
-Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
-or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create)
-instance group.
-
-### STEP 4.4 AUTOSCALING (OPTIONAL)
-
-I'll eventually do this at a later date.
-
-```bash
-gcloud compute instance-groups managed set-autoscaling
-```
-
-This script configures the autoscalling for `the instance groups`
-[/deploy-gce/create-instance-group/autoscaling.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/example-01/deploy-gce/create-instance-group/autoscaling.sh).
-
-Online docs to create [managed](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/managed/create)
-or [unmanaged](https://cloud.google.com/sdk/gcloud/reference/compute/instance-groups/unmanaged/create)
-instance group.
-
-## CONTINUOUS INTEGRATION & DEPLOYMENT
-
-Refer to
-[ci-README.md](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci-README.md)
-on how I automated the above steps.
-
-## CHECK THAT hello-go IS RUNNING ON YOUR VM INSTANCE
-
-`ssh` into your VM instance.  This is easy from the gce console.
-
-I actually ssh from my machine since I placed my public keys in gce metadata
-sshkeys, which automatically placed them in the authorized_keys files on my VM.
-Refer
-[here](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet#instances---gce-metadata---startup-scripts)
-on how to do that,
-
-```bash
-ssh -i ~/.ssh/google_compute_engine jeff@IP
-```
-
-Check the logs (stdout) of the running docker container and shell script.
-Remember, you must be root.
-
-Check docker is running,
-
-```bash
-docker ps
-docker logs -f --tail 10 -f hello-go
-docker stop hello-go
-```
-
-Check that your hello-go.service is running,
-
-```bash
-systemctl list-unit-files | grep hello.go
-sudo systemctl status hello-go
-journalctl -f
-sudo systemctl stop hello-go
-cat /lib/systemd/system/hello-go.service
-# Remember, it kicks off /root/bin/hello-go
-```
-
-Lastly, if you have multiple VMS, and since you put the
-same ssh keys in `/home/jeff/.ssh` when you built the image with packer,
-your VMs can talk to each other using gce's internal DNS.
-
-```bash
-ssh <USERNAME>@<HOSTNAME>.us-west1-a.c.<PROJECT>.internal
-```
-
-That's it, you did a lot, have a beer and I hope you had fun.
-
-## A HIGH-LEVEL VIEW OF GCE
-
-Here is an illustration showing how everything fits together,
-
-![IMAGE -  google compute engine creating deploying custom image - IMAGE](https://github.com/JeffDeCola/my-cheat-sheets/blob/master/docs/pics/gce-overview-creating-deploying-custom-image.jpg)
+For more information on using concourse for continuous integration,
+refer to my cheat sheet on [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).

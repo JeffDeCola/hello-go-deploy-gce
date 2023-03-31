@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# hello-go-deploy-aks push.sh
+# hello-go-deploy-gce push.sh
 
 echo " "
 
@@ -22,8 +22,8 @@ fi
 echo "Assuming you are logged in, lets push your built docker image to DockerHub"
 echo "To login to docker use:"
 echo "    docker login"
-echo "docker push jeffdecola/hello-go-deploy-aks"
-docker push jeffdecola/hello-go-deploy-aks
+echo "docker push jeffdecola/hello-go-deploy-gce"
+docker push jeffdecola/hello-go-deploy-gce
 echo " "
 
 echo "************************************************************************"

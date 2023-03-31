@@ -1,4 +1,4 @@
-# hello-go-deploy-aks pipeline.yml
+# hello-go-deploy-gce pipeline.yml
 
 #------------------------------------------------------------------------------------------
 jobs:
@@ -9,36 +9,36 @@ jobs:
   plan:
 
     # GET REPO FROM GITHUB
-    - get: hello-go-deploy-aks
+    - get: hello-go-deploy-gce
       trigger: true
     # SEND SLACK ALERT  
     - put: resource-slack-alert
       params:
         channel: '#jeff-builds'
-        text: "From hello-go-deploy-aks: STARTED job-readme-github-pages in concourse ci."
+        text: "From hello-go-deploy-gce: STARTED job-readme-github-pages in concourse ci."
     # SEND GITHUB STATUS
     - put: resource-repo-status
-      params: { state: "pending", description: "STARTED job-readme-github-pages in concourse ci.", commit: "hello-go-deploy-aks" }    
+      params: { state: "pending", description: "STARTED job-readme-github-pages in concourse ci.", commit: "hello-go-deploy-gce" }    
     
     # RUN TASK IN REPO USING ALPINE DOCKER IMAGE
     - task: task-readme-github-pages
-      file: hello-go-deploy-aks/ci/tasks/task-readme-github-pages.yml
+      file: hello-go-deploy-gce/ci/tasks/task-readme-github-pages.yml
       
       # TASK SUCCESS
       on_success:
         do:
           # PUSH NEW REPO TO GITHUB
-          - put: hello-go-deploy-aks
+          - put: hello-go-deploy-gce
             params:
-              repository: hello-go-deploy-aks-updated  
+              repository: hello-go-deploy-gce-updated  
           # SEND SLACK ALERT  
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
-              text: "From hello-go-deploy-aks: PASSED job-readme-github-pages in concourse ci."
+              text: "From hello-go-deploy-gce: PASSED job-readme-github-pages in concourse ci."
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "success", description: "PASSED job-readme-github-pages in concourse ci", commit: "hello-go-deploy-aks" }
+            params: { state: "success", description: "PASSED job-readme-github-pages in concourse ci", commit: "hello-go-deploy-gce" }
       
       # TASK FAILURE   
       on_failure:
@@ -47,10 +47,10 @@ jobs:
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
-              text: "From hello-go-deploy-aks: FAILED job-readme-github-pages in concourse ci."
+              text: "From hello-go-deploy-gce: FAILED job-readme-github-pages in concourse ci."
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "failure", description: "FAILED job-readme-github-pages in concourse ci", commit: "hello-go-deploy-aks" }
+            params: { state: "failure", description: "FAILED job-readme-github-pages in concourse ci", commit: "hello-go-deploy-gce" }
 
 #**********************************************
 - name: job-unit-tests
@@ -58,40 +58,40 @@ jobs:
   plan:
 
     # GET REPO FROM GITHUB
-    - get: hello-go-deploy-aks
+    - get: hello-go-deploy-gce
       trigger: true
       passed: [job-readme-github-pages]
     # SEND SLACK ALERT  
     - put: resource-slack-alert
       params:
         channel: '#jeff-builds'
-        text: "From hello-go-deploy-aks: STARTED job-unit-tests in concourse ci."
+        text: "From hello-go-deploy-gce: STARTED job-unit-tests in concourse ci."
     # SEND GITHUB STATUS
     - put: resource-repo-status
-      params: { state: "pending", description: "STARTED job-unit-tests in concourse ci.", commit: "hello-go-deploy-aks" }
+      params: { state: "pending", description: "STARTED job-unit-tests in concourse ci.", commit: "hello-go-deploy-gce" }
 
     # RUN TASK IN REPO USING ALPINE DOCKER IMAGE 
     - task: task-unit-tests
-      file: hello-go-deploy-aks/ci/tasks/task-unit-tests.yml
+      file: hello-go-deploy-gce/ci/tasks/task-unit-tests.yml
 
       # TASK SUCCESS
       on_success:
         do:
           # PUSH NEW REPO TO GITHUB
-          - put: hello-go-deploy-aks
+          - put: hello-go-deploy-gce
             params:
-              repository: hello-go-deploy-aks  
+              repository: hello-go-deploy-gce  
           # SEND SLACK ALERT  
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
               text_file: coverage-results/test_coverage.txt
               text: |
-                From hello-go-deploy-aks: PASSED job-unit-tests in concourse ci. 
+                From hello-go-deploy-gce: PASSED job-unit-tests in concourse ci. 
                 $TEXT_FILE_CONTENT
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "success", description: "PASSED job-unit-tests in concourse ci", commit: "hello-go-deploy-aks" }
+            params: { state: "success", description: "PASSED job-unit-tests in concourse ci", commit: "hello-go-deploy-gce" }
       
       # TASK FAILURE
       on_failure:
@@ -100,10 +100,10 @@ jobs:
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
-              text: "From hello-go-deploy-aks: FAILED job-unit-tests in concourse ci."
+              text: "From hello-go-deploy-gce: FAILED job-unit-tests in concourse ci."
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "failure", description: "FAILED job-unit-tests in concourse ci.", commit: "hello-go-deploy-aks" }
+            params: { state: "failure", description: "FAILED job-unit-tests in concourse ci.", commit: "hello-go-deploy-gce" }
 
 #**********************************************
 - name: job-build-push
@@ -111,21 +111,21 @@ jobs:
   plan:
 
     # GET REPO FROM GITHUB
-    - get: hello-go-deploy-aks
+    - get: hello-go-deploy-gce
       trigger: true
       passed: [job-unit-tests]
     # SEND SLACK ALERT  
     - put: resource-slack-alert
       params:
         channel: '#jeff-builds'
-        text: "From hello-go-deploy-aks: STARTED job-build-push in concourse ci."
+        text: "From hello-go-deploy-gce: STARTED job-build-push in concourse ci."
     # SEND GITHUB STATUS
     - put: resource-repo-status
-      params: { state: "pending", description: "STARTED job-build-push in concourse ci.", commit: "hello-go-deploy-aks" }
+      params: { state: "pending", description: "STARTED job-build-push in concourse ci.", commit: "hello-go-deploy-gce" }
 
     # RUN TASK IN REPO USING ALPINE DOCKER IMAGE 
     - task: task-build-push
-      file: hello-go-deploy-aks/ci/tasks/task-build-push.yml
+      file: hello-go-deploy-gce/ci/tasks/task-build-push.yml
 
     # PUSH DOCKER IMAGE TO DOCKERHUB  
     - put: resource-dump-to-dockerhub
@@ -138,10 +138,10 @@ jobs:
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
-              text: "From hello-go-deploy-aks: PASSED job-build-push in concourse ci."
+              text: "From hello-go-deploy-gce: PASSED job-build-push in concourse ci."
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "pending", description: "PASSED job-build-push in concourse ci.", commit: "hello-go-deploy-aks" }
+            params: { state: "pending", description: "PASSED job-build-push in concourse ci.", commit: "hello-go-deploy-gce" }
       
       # TASK FAILURE    
       on_failure:
@@ -150,10 +150,10 @@ jobs:
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
-              text: "From hello-go-deploy-aks: FAILED job-build-push in concourse ci."
+              text: "From hello-go-deploy-gce: FAILED job-build-push in concourse ci."
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "failure", description: "FAILED job-build-push in concourse ci.", commit: "hello-go-deploy-aks" }
+            params: { state: "failure", description: "FAILED job-build-push in concourse ci.", commit: "hello-go-deploy-gce" }
 
 #**********************************************
 - name: job-deploy
@@ -161,21 +161,21 @@ jobs:
   plan:
 
     # GET REPO FROM GITHUB
-    - get: hello-go-deploy-aks
+    - get: hello-go-deploy-gce
       trigger: true
       passed: [job-build-push]
     # SEND SLACK ALERT
     - put: resource-slack-alert
       params:
         channel: '#jeff-builds'
-        text: "From hello-go-deploy-aks: STARTED job-deploy in concourse ci."
+        text: "From hello-go-deploy-gce: STARTED job-deploy in concourse ci."
     # SEND GITHUB STATUS
     - put: resource-repo-status
-      params: { state: "pending", description: "STARTED job-deploy in concourse ci.", commit: "hello-go-deploy-aks" }
+      params: { state: "pending", description: "STARTED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
     
     # RUN TASK IN REPO USING ALPINE DOCKER IMAGE 
     - task: task-deploy
-      file: hello-go-deploy-aks/ci/tasks/task-deploy.yml
+      file: hello-go-deploy-gce/ci/tasks/task-deploy.yml
 
       # TASK SUCCESS
       on_success:
@@ -184,10 +184,10 @@ jobs:
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
-              text: "From hello-go-deploy-aks: PASSED job-deploy in concourse ci."
+              text: "From hello-go-deploy-gce: PASSED job-deploy in concourse ci."
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "success", description: "PASSED job-deploy in concourse ci.", commit: "hello-go-deploy-aks" }
+            params: { state: "success", description: "PASSED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
 
       # TASK FAILURE    
       on_failure:
@@ -196,10 +196,10 @@ jobs:
           - put: resource-slack-alert
             params:
               channel: '#jeff-builds'
-              text: "From hello-go-deploy-aks: FAILED job-deploy in concourse ci."
+              text: "From hello-go-deploy-gce: FAILED job-deploy in concourse ci."
           # SEND GITHUB STATUS
           - put: resource-repo-status
-            params: { state: "failure", description: "FAILED job-deploy in concourse ci.", commit: "hello-go-deploy-aks" }
+            params: { state: "failure", description: "FAILED job-deploy in concourse ci.", commit: "hello-go-deploy-gce" }
 
 #------------------------------------------------------------------------------------------
 resource_types:
@@ -219,12 +219,12 @@ resource_types:
 #------------------------------------------------------------------------------------------
 resources:
 
-  - name: hello-go-deploy-aks
+  - name: hello-go-deploy-gce
     type: git
     icon: github
     source:
-      #uri: https://github.com/jeffdecola/hello-go-deploy-aks
-      uri: git@github.com:jeffdecola/hello-go-deploy-aks.git
+      #uri: https://github.com/jeffdecola/hello-go-deploy-gce
+      uri: git@github.com:jeffdecola/hello-go-deploy-gce.git
       branch: master
       private_key: ((git_private_key))
 
@@ -232,7 +232,7 @@ resources:
     type: docker-image
     icon: docker
     source:
-      repository: jeffdecola/hello-go-deploy-aks
+      repository: jeffdecola/hello-go-deploy-gce
       tag: latest
       username: jeffdecola
       password: ((dockerhub_password))
@@ -247,6 +247,6 @@ resources:
     type: github-status
     icon: github
     source:
-      repository: jeffdecola/hello-go-deploy-aks 
+      repository: jeffdecola/hello-go-deploy-gce 
       access_token: ((repo_github_token))
       branch: master

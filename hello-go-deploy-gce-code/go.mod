@@ -1,4 +1,4 @@
-module hello-go-deploy-aks-code
+module hello-go-deploy-gce-code
 
 go 1.20
 

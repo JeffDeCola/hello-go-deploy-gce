@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# hello-go-deploy-aks create-binary.sh
+# hello-go-deploy-gce create-binary.sh
 
 echo " "
 

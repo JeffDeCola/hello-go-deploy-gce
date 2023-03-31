@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# hello-go-deploy-aks unit-tests.sh
+# hello-go-deploy-gce unit-tests.sh
 
 echo " "
 

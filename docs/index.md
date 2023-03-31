@@ -1,8 +1,8 @@
 ---
 layout: default
-title: JeffDeCola/hello-go-deploy-gce
-projectname : hello-go-deploy-gce
-summary: Deploy a "hello-world" docker image to Google Compute Engine (gce)
+title: JeffDeCola/hello-go-deploy-aks
+projectname : hello-go-deploy-aks
+summary: Deploy a "hello-world" docker image to Microsoft Azure Kubernetes Service (aks)
 ---
 
 {% include README.md %}

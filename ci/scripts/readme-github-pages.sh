@@ -1,5 +1,5 @@
 #!/bin/sh
-# hello-go-deploy-gce readme-github-pages.sh
+# hello-go-deploy-aks readme-github-pages.sh
 
 echo " "
 
@@ -20,7 +20,7 @@ fi
 echo "GOAL ----------------------------------------------------------------------------------"
 echo " "
 
-echo "The goal is to git clone /hello-go-deploy-gce to /hello-go-deploy-gce-updated"
+echo "The goal is to git clone /hello-go-deploy-aks to /hello-go-deploy-aks-updated"
 echo "Then script will edit the /docs/_includes/README.md for GITHUB WEBPAGES"
 echo "Finally push the changes in /docs/_includes/README.md to github"
 echo " "
@@ -29,8 +29,8 @@ echo "CHECK THINGS -------------------------------------------------------------
 echo " "
 
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
-echo "   /hello-go-deploy-gce"
-echo "   /hello-go-deploy-gce-updated (created in task-build-push.yml task file)"
+echo "   /hello-go-deploy-aks"
+echo "   /hello-go-deploy-aks-updated (created in task-build-push.yml task file)"
 echo " "
 
 echo "pwd is: $PWD"
@@ -43,12 +43,12 @@ echo " "
 echo "GIT CLONE -----------------------------------------------------------------------------"
 echo " "
 
-echo "git clone hello-go-deploy-gce to hello-go-deploy-gce-updated"
-git clone hello-go-deploy-gce hello-go-deploy-gce-updated
+echo "git clone hello-go-deploy-aks to hello-go-deploy-aks-updated"
+git clone hello-go-deploy-aks hello-go-deploy-aks-updated
 echo " "
 
-echo "cd hello-go-deploy-gce-updated"
-cd hello-go-deploy-gce-updated
+echo "cd hello-go-deploy-aks-updated"
+cd hello-go-deploy-aks-updated
 echo " "
 
 echo "List whats in the current directory"
@@ -60,8 +60,8 @@ echo " "
 
 echo "Copy README.md to /docs/_includes/README.md and edit"
 echo "    Remove everything before the second heading in README.md.  Place in temp-README.md"
-echo "    sed '0,/GitHub Webpage/d' README.md > temp-README.md"
-sed '0,/GitHub Webpage/d' README.md > temp-README.md
+echo "    sed '0,/github webpage/d' README.md > temp-README.md"
+sed '0,/github webpage/d' README.md > temp-README.md
 echo "    Change the first heading ## to #"
 echo "    sed -i '0,/##/{s/##/#/}' temp-README.md"
 sed -i '0,/##/{s/##/#/}' temp-README.md
@@ -70,8 +70,8 @@ echo "    sed -i 's#IMAGE](docs/#IMAGE](#g' temp-README.md"
 sed -i 's#IMAGE](docs/#IMAGE](#g' temp-README.md
 echo "    Update the image links for svgs (if you have them)"
 echo "    Add \"https://raw.githubusercontent.com/JeffDeCola/REPONAME/master/svgs/\" to \"svgs/\""
-echo "    sed -i 's/svgs\//https:\/\/raw.githubusercontent.com\/JeffDeCola\/hello-go-deploy-gce\/master\/svgs\//g' temp-README.md"
-sed -i 's/svgs\//https:\/\/raw.githubusercontent.com\/JeffDeCola\/hello-go-deploy-gce\/master\/svgs\//g' temp-README.md
+echo "    sed -i 's/svgs\//https:\/\/raw.githubusercontent.com\/JeffDeCola\/hello-go-deploy-aks\/master\/svgs\//g' temp-README.md"
+sed -i 's/svgs\//https:\/\/raw.githubusercontent.com\/JeffDeCola\/hello-go-deploy-aks\/master\/svgs\//g' temp-README.md
 echo " "
 
 echo "GIT COMMIT OR NOT ---------------------------------------------------------------------"

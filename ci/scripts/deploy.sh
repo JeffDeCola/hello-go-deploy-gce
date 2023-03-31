@@ -1,5 +1,5 @@
 #!/bin/sh
-# hello-go-deploy-aks deploy.sh
+# hello-go-deploy-gce deploy.sh
 
 echo " "
 
@@ -20,14 +20,14 @@ fi
 echo "GOAL ----------------------------------------------------------------------------------"
 echo " "
 
-echo "The goal is to Deploy a docker image to Microsoft Azure Kubernetes Service (aks)"
+echo "The goal is to Deploy a docker image to Google Compute Engine (gce)"
 echo " "
 
 echo "CHECK THINGS --------------------------------------------------------------------------"
 echo " "
 
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
-echo "   /hello-go-deploy-aks"
+echo "   /hello-go-deploy-gce"
 echo " "
 
 echo "pwd is: $PWD"

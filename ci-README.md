@@ -3,45 +3,45 @@
 I use concourse to automate,
 
 * Use README for
-  [GitHub Webpage](https://jeffdecola.github.io/hello-go-deploy-aks/)
+  [GitHub Webpage](https://jeffdecola.github.io/hello-go-deploy-gce/)
 * TEST code
 * BUILD docker image
 * PUSH to dockerhub
-* DEPLOY to aks
+* DEPLOY to gce
 * Alert me of the progress via repo status and slack
 
 ## PIPELINE
 
 The concourse
-[pipeline.yml](https://github.com/JeffDeCola/hello-go-deploy-aks/blob/master/ci/pipeline.yml)
+[pipeline.yml](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci/pipeline.yml)
 shows the entire ci flow,
 
-![IMAGE - hello-go-deploy-aks concourse ci pipeline - IMAGE](docs/pics/hello-go-deploy-aks-pipeline.jpg)
+![IMAGE - hello-go-deploy-gce concourse ci pipeline - IMAGE](docs/pics/hello-go-deploy-gce-pipeline.jpg)
 
 ## JOBS, TASKS AND RESOURCE TYPES
 
 Concourse Jobs and Tasks
 
 * `job-readme-github-pages` runs task
-  [task-readme-github-pages.yml](https://github.com/JeffDeCola/hello-go-deploy-aks/blob/master/ci/tasks/task-readme-github-pages.yml)
+  [task-readme-github-pages.yml](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci/tasks/task-readme-github-pages.yml)
   that kicks off shell script
-  [readme-github-pages.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/blob/master/ci/scripts/readme-github-pages.sh)
+  [readme-github-pages.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci/scripts/readme-github-pages.sh)
 * `job-unit-tests` runs task
-  [task-unit-tests.yml](https://github.com/JeffDeCola/hello-go-deploy-aks/blob/master/ci/tasks/task-unit-tests.yml)
+  [task-unit-tests.yml](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci/tasks/task-unit-tests.yml)
   that kicks off shell script
-  [unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/scripts/unit-tests.sh)
+  [unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/unit-tests.sh)
 * `job-build-push` runs task
-  [task-build-push.yml](https://github.com/JeffDeCola/hello-go-deploy-aks/blob/master/ci/tasks/task-build-push.yml)
+  [task-build-push.yml](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci/tasks/task-build-push.yml)
   that kicks off shell script
-  [build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/scripts/build-push.sh)
+  [build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/build-push.sh)
 * `job-deploy` runs task
-  [task-deploy.yml](https://github.com/JeffDeCola/hello-go-deploy-aks/blob/master/ci/tasks/task-deploy.yml)
+  [task-deploy.yml](https://github.com/JeffDeCola/hello-go-deploy-gce/blob/master/ci/tasks/task-deploy.yml)
   that kicks off shell script
-  [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-aks/tree/master/ci/scripts/deploy.sh)
+  [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/ci/scripts/deploy.sh)
 
 Concourse Resources
 
-* `hello-go-deploy-aks` uses a resource type
+* `hello-go-deploy-gce` uses a resource type
   [docker image](https://hub.docker.com/r/concourse/git-resource/)
   to PULL a repo from github
 * `resource-dump-to-dockerhub` uses a resource type

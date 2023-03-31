@@ -1,4 +1,4 @@
-# hello-go-deploy-aks task-readme-github-pages.yml
+# hello-go-deploy-gce task-readme-github-pages.yml
 
 platform: linux
 
@@ -10,11 +10,11 @@ image_resource:
     tag: 1.20.1
 
 inputs:
-  - name: hello-go-deploy-aks
+  - name: hello-go-deploy-gce
 
 outputs:
-  - name: hello-go-deploy-aks-updated
+  - name: hello-go-deploy-gce-updated
 
 run:
-  path: ./hello-go-deploy-aks/ci/scripts/readme-github-pages.sh
+  path: ./hello-go-deploy-gce/ci/scripts/readme-github-pages.sh
   # args: [-debug]

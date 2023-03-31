@@ -1,4 +1,4 @@
-# hello-go-deploy-aks task-unit-tests.yml
+# hello-go-deploy-gce task-unit-tests.yml
 
 platform: linux
 
@@ -10,11 +10,11 @@ image_resource:
     tag: 1.20.1
 
 inputs:
-  - name: hello-go-deploy-aks
+  - name: hello-go-deploy-gce
 
 outputs:
   - name: coverage-results
 
 run:
-  path: ./hello-go-deploy-aks/ci/scripts/unit-tests.sh
+  path: ./hello-go-deploy-gce/ci/scripts/unit-tests.sh
   # args: [-debug]

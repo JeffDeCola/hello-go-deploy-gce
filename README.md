@@ -201,7 +201,7 @@ For this example, I will add two running services,
 
 * The dockerhub image runs at boot
   [hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce/)
-* A binary /usr/bin/hello-go executable runs at boot
+* A binary /home/jeff/hello-go executable runs at boot
 
 To keep things simple, the files are located in my
 [my-packer-image-builds](https://github.com/JeffDeCola/my-packer-image-builds)
@@ -307,7 +307,7 @@ docker logs -f --tail 10 -f hello-go-deploy-gce
 Check that your hello-go.service is running,
 
 ```bash
-# Remember, it kicks off /root/bin/hello-go
+# Remember, it kicks off /home/jeff/hello-go
 systemctl list-unit-files | grep hello.go
 sudo systemctl status hello-go
 journalctl -f

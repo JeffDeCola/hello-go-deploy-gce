@@ -201,7 +201,7 @@ For this example, I will add two running services,
 
 * The dockerhub image runs at boot
   [hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce/)
-* A binary /root/bin/hello-go executable runs at boot
+* A binary /usr/bin/hello-go executable runs at boot
 
 To keep things simple, the files are located in my
 [my-packer-image-builds](https://github.com/JeffDeCola/my-packer-image-builds)
@@ -313,6 +313,15 @@ sudo systemctl status hello-go
 journalctl -f
 sudo systemctl stop hello-go
 cat /lib/systemd/system/hello-go.service
+sudo -s
+```
+
+Last, if you have multiple VMS, and since you put the
+same ssh keys in `/home/jeff/.ssh` when you built the image with packer,
+your VMs can talk to each other using gce's internal DNS.
+
+```bash
+ssh <USERNAME>@<HOSTNAME>.us-west1-a.c.<PROJECT>.internal
 ```
 
 ## CONTINUOUS INTEGRATION & DEPLOYMENT

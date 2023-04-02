@@ -22,6 +22,12 @@ go get -u -v github.com/sirupsen/logrus
 go get -u -v github.com/cweill/gotests/...
 ```
 
+This repo contains the packer gce image build scripts,
+
+```bash
+git clone git@github.com:JeffDeCola/my-packer-image-builds.git
+```
+
 ## SOFTWARE STACK
 
 * DEVELOPMENT
@@ -30,9 +36,10 @@ go get -u -v github.com/cweill/gotests/...
   * [concourse/fly](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations/continuous-integration-continuous-deployment/concourse-cheat-sheet)
     (optional)
   * [docker](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations/orchestration/builds-deployment-containers/docker-cheat-sheet)
+  * [packer](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations/orchestration/builds-deployment-containers/packer-cheat-sheet)
 * SERVICES
   * [dockerhub](https://hub.docker.com/)
-  * google compute engine (gce)
+  * [google compute engine (gce)](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/service-architectures/infrastructure-as-a-service/google-compute-engine-cheat-sheet)
 
 ## RUN
 
@@ -124,7 +131,62 @@ at DockerHub.
 
 ## STEP 4 - DEPLOY (TO GCE)
 
-_Coming soon._
+There are three steps to deploy on gce,
+
+* STEP 4.1 - Build a gce image (insert your docker image)
+* STEP 4.2 - Create an instance template (HW resources)
+* STEP 4.3 - Create an instance group (Launch VM in region)
+
+For this example, I will add two running services,
+
+* The dockerhub image
+  [hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce/)
+* A binary /bin/hello-go executable
+
+To keep things simple, the files are located in my
+[my-packer-image-builds](https://github.com/JeffDeCola/my-packer-image-builds)
+repo.
+
+### STEP 4.1 BUILD A CUSTOM MACHINE IMAGE USING PACKER
+
+To validate your packer file,
+
+```bash
+cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
+packer validate \
+    -var "image_name=hello-go-deploy-gce" \
+    -var "account_file=$GCP_JEFFS_SERVICE_ACCOUNT_PATH" \
+    -var "project_id=$GCP_JEFFS_PROJECT_ID" \
+    template.pkr.hcl
+```
+
+To
+[build-image.sh](https://github.com/JeffDeCola/hello-go-deploy-gce/tree/master/hello-go-deploy-gce-code/deploy/build-image.sh)
+on gce,
+
+```bash
+cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
+packer build \
+    -var "image_name=hello-go-deploy-gce" \
+    -var "account_file=$GCP_JEFFS_SERVICE_ACCOUNT_PATH" \
+    -var "project_id=$GCP_JEFFS_PROJECT_ID" \
+    template.pkr.hcl
+```
+
+Check that the image was created at gce,
+
+```bash
+gcloud config set project $GCP_JEFFS_PROJECT_ID
+gcloud compute images list --no-standard-images
+```
+
+### STEP 4.2 CREATE AN INSTANCE TEMPLATE
+
+### STEP 4.3 CREATE AN INSTANCE GROUP
+
+### CHECK THAT HELLO-GO IS RUNNING ON YOUR VM INSTANCE
+
+### A HIGH-LEVEL VIEW OF GCE
 
 ## CONTINUOUS INTEGRATION & DEPLOYMENT
 

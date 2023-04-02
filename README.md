@@ -217,7 +217,8 @@ export GCP_JEFFS_SERVICE_ACCOUNT_PATH=[path to your google platform .json file]
 export GCP_JEFFS_PROJECT_ID=[your project id]
 ```
 
-To validate your packer file,
+To validate your packer template file
+[template.pkr.hcl](https://github.com/JeffDeCola/my-packer-image-builds/blob/master/google-compute-engine-images/jeffs-gce-image-ubuntu-2204/template.pkr.hcl),
 
 ```bash
 cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
@@ -250,11 +251,70 @@ gcloud compute images list --no-standard-images
 
 ### STEP 4.2 CREATE AN INSTANCE TEMPLATE
 
+The instance template contains the HW resources the instance group needs
+to create the VM instance.
+
+To
+[create-instance-template](https://github.com/JeffDeCola/my-packer-image-builds/blob/master/google-compute-engine-images/jeffs-gce-image-ubuntu-2204/create-instance-template.sh),
+
+```bash
+cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
+sh create-instance-template.sh "jeffs-hello-go-deploy-gce-image" "hello-go-deploy-gce"
+```
+
+Check the instance template was created,
+
+```bash
+gcloud compute instance-templates list
+```
+
 ### STEP 4.3 CREATE AN INSTANCE GROUP
 
-### CHECK THAT HELLO-GO IS RUNNING ON YOUR VM INSTANCE
+The instance group controls the show.
+It launches and scales your VM instances as needed.
 
-### A HIGH-LEVEL VIEW OF GCE
+To
+[create-instance-group](https://github.com/JeffDeCola/my-packer-image-builds/blob/master/google-compute-engine-images/jeffs-gce-image-ubuntu-2204/create-instance-group.sh),
+
+```bash
+cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
+sh create-instance-group.sh "jeffs-hello-go-deploy-gce-instance-template" "hello-go-deploy-gce"
+```
+
+Check that the instance group and VM instance were created,
+
+```bash
+gcloud compute instance-groups list
+gcloud compute instances list
+```
+
+## CHECK SERVICES ARE RUNNING
+
+To ssh into your gce VM, I placed my public keys in gce
+metadata ssh keys, which automatically
+places them in the authorized_keys files on my VM,
+
+```bash
+ssh -i ~/.ssh/google_compute_engine jeff@<IP>
+```
+
+Check the docker service is running,
+
+```bash
+docker ps
+docker logs -f --tail 10 -f hello-go-deploy-gce
+```
+
+Check that your hello-go.service is running,
+
+```bash
+# Remember, it kicks off /root/bin/hello-go
+systemctl list-unit-files | grep hello.go
+sudo systemctl status hello-go
+journalctl -f
+sudo systemctl stop hello-go
+cat /lib/systemd/system/hello-go.service
+```
 
 ## CONTINUOUS INTEGRATION & DEPLOYMENT
 

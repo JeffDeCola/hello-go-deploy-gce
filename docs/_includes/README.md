@@ -133,15 +133,15 @@ at DockerHub.
 
 There are three steps to deploy on gce,
 
-* STEP 4.1 - Build a gce image (insert your docker image)
+* STEP 4.1 - Build a gce image
 * STEP 4.2 - Create an instance template (HW resources)
 * STEP 4.3 - Create an instance group (Launch VM in region)
 
 For this example, I will add two running services,
 
-* The dockerhub image
+* The dockerhub image runs at boot
   [hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce/)
-* A binary /bin/hello-go executable
+* A binary /home/jeff/hello-go executable runs at boot
 
 To keep things simple, the files are located in my
 [my-packer-image-builds](https://github.com/JeffDeCola/my-packer-image-builds)
@@ -149,7 +149,15 @@ repo.
 
 ### STEP 4.1 BUILD A CUSTOM MACHINE IMAGE USING PACKER
 
-To validate your packer file,
+You will need to set the following environment variables (I added mine in ~/.bashrc),
+
+```bash
+export GCP_JEFFS_SERVICE_ACCOUNT_PATH=[path to your google platform .json file]
+export GCP_JEFFS_PROJECT_ID=[your project id]
+```
+
+To validate your packer template file
+[template.pkr.hcl](https://github.com/JeffDeCola/my-packer-image-builds/blob/master/google-compute-engine-images/jeffs-gce-image-ubuntu-2204/template.pkr.hcl),
 
 ```bash
 cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
@@ -182,11 +190,79 @@ gcloud compute images list --no-standard-images
 
 ### STEP 4.2 CREATE AN INSTANCE TEMPLATE
 
+The instance template contains the HW resources the instance group needs
+to create the VM instance.
+
+To
+[create-instance-template](https://github.com/JeffDeCola/my-packer-image-builds/blob/master/google-compute-engine-images/jeffs-gce-image-ubuntu-2204/create-instance-template.sh),
+
+```bash
+cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
+sh create-instance-template.sh "jeffs-hello-go-deploy-gce-image" "hello-go-deploy-gce"
+```
+
+Check the instance template was created,
+
+```bash
+gcloud compute instance-templates list
+```
+
 ### STEP 4.3 CREATE AN INSTANCE GROUP
 
-### CHECK THAT HELLO-GO IS RUNNING ON YOUR VM INSTANCE
+The instance group controls the show.
+It launches and scales your VM instances as needed.
 
-### A HIGH-LEVEL VIEW OF GCE
+To
+[create-instance-group](https://github.com/JeffDeCola/my-packer-image-builds/blob/master/google-compute-engine-images/jeffs-gce-image-ubuntu-2204/create-instance-group.sh),
+
+```bash
+cd my-packer-image-builds/google-compute-engine-images/jeffs-gce-image-ubuntu-2204
+sh create-instance-group.sh "jeffs-hello-go-deploy-gce-instance-template" "hello-go-deploy-gce"
+```
+
+Check that the instance group and VM instance were created,
+
+```bash
+gcloud compute instance-groups list
+gcloud compute instances list
+```
+
+## CHECK SERVICES ARE RUNNING
+
+To ssh into your gce VM, I placed my public keys in gce
+metadata ssh keys, which automatically
+places them in the authorized_keys files on my VM,
+
+```bash
+ssh -i ~/.ssh/google_compute_engine jeff@<IP>
+```
+
+Check the docker service is running,
+
+```bash
+docker ps
+docker logs -f --tail 10 -f hello-go-deploy-gce
+```
+
+Check that your hello-go.service is running,
+
+```bash
+# Remember, it kicks off /home/jeff/hello-go
+systemctl list-unit-files | grep hello.go
+sudo systemctl status hello-go
+journalctl -f
+sudo systemctl stop hello-go
+cat /lib/systemd/system/hello-go.service
+sudo -s
+```
+
+Last, if you have multiple VMS, and since you put the
+same ssh keys in `/home/jeff/.ssh` when you built the image with packer,
+your VMs can talk to each other using gce's internal DNS.
+
+```bash
+ssh <USERNAME>@<HOSTNAME>.us-west1-a.c.<PROJECT>.internal
+```
 
 ## CONTINUOUS INTEGRATION & DEPLOYMENT
 

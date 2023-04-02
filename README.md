@@ -194,21 +194,28 @@ at DockerHub.
 
 There are three steps to deploy on gce,
 
-* STEP 4.1 - Build a gce image (insert your docker image)
+* STEP 4.1 - Build a gce image
 * STEP 4.2 - Create an instance template (HW resources)
 * STEP 4.3 - Create an instance group (Launch VM in region)
 
 For this example, I will add two running services,
 
-* The dockerhub image
+* The dockerhub image runs at boot
   [hello-go-deploy-gce](https://hub.docker.com/r/jeffdecola/hello-go-deploy-gce/)
-* A binary /bin/hello-go executable
+* A binary /root/bin/hello-go executable runs at boot
 
 To keep things simple, the files are located in my
 [my-packer-image-builds](https://github.com/JeffDeCola/my-packer-image-builds)
 repo.
 
 ### STEP 4.1 BUILD A CUSTOM MACHINE IMAGE USING PACKER
+
+You will need to set the following environment variables (I added mine in ~/.bashrc),
+
+```bash
+export GCP_JEFFS_SERVICE_ACCOUNT_PATH=[path to your google platform .json file]
+export GCP_JEFFS_PROJECT_ID=[your project id]
+```
 
 To validate your packer file,
 

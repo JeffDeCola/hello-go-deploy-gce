@@ -43,8 +43,7 @@ Table of Contents
   * [STEP 4.1 BUILD A CUSTOM MACHINE IMAGE USING PACKER](https://github.com/JeffDeCola/hello-go-deploy-gce#step-41-build-a-custom-machine-image-using-packer)
   * [STEP 4.2 CREATE AN INSTANCE TEMPLATE](https://github.com/JeffDeCola/hello-go-deploy-gce#step-42-create-an-instance-template)
   * [STEP 4.3 CREATE AN INSTANCE GROUP](https://github.com/JeffDeCola/hello-go-deploy-gce#step-43-create-an-instance-group)
-  * [CHECK THAT HELLO-GO IS RUNNING ON YOUR VM INSTANCE](https://github.com/JeffDeCola/hello-go-deploy-gce#check-that-hello-go-is-running-on-your-vm-instance)
-  * [A HIGH-LEVEL VIEW OF GCE](https://github.com/JeffDeCola/hello-go-deploy-gce#a-high-level-view-of-gce)
+* [CHECK SERVICES ARE RUNNING](https://github.com/JeffDeCola/hello-go-deploy-gce#check-services-are-running)
 * [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-gce#continuous-integration--deployment)
 
 Documentation and Reference

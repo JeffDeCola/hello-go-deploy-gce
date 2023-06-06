@@ -226,7 +226,7 @@ resources:
       #uri: https://github.com/jeffdecola/hello-go-deploy-gce
       uri: git@github.com:jeffdecola/hello-go-deploy-gce.git
       branch: master
-      private_key: ((git_private_key))
+      private_key: ((concourse_git_private_key))
 
   - name: resource-dump-to-dockerhub
     type: docker-image

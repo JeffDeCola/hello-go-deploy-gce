@@ -1,4 +1,4 @@
-# golang-services.gitignore
+# .gitignore
 
 # CONCOURSE SECRETS
 .concourse-secrets.yml
@@ -22,6 +22,8 @@ sftp.json
 # TAR FILES
 *.tar.gz
 *.tar.gz.gpg
+
+# golang-services.gitignore SPECIFIC BELOW ---------------------------------------------
 
 # RUN (BINARIES)
 **/bin/hello-go
